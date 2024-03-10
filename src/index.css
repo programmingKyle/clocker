@@ -42,7 +42,7 @@ input.error {
 }
 
 button {
-  background-color: #313131;
+  background-color: #414141;
   border-style: none;
   color: white;
   border-radius: 3px;
@@ -75,7 +75,6 @@ select {
 
 .base-grid {
   display: grid;
-  grid-gap: 5px;
   height: 100%;
   grid-template-rows: auto 1fr;
   overflow: hidden;
@@ -100,6 +99,16 @@ select {
   border-radius: 3px;
   text-align: center;
   padding: 10px;
+  display: grid;
+  grid-gap: 5px;
+}
+
+.list-container {
+  display: grid;
+  grid-gap: 5px;
+  align-content: start;
+  overflow: auto;
+  border-radius: 3px;
 }
 
 p {
@@ -174,4 +183,38 @@ h1,h2,h3,h4,h5,h6 {
 .app-content-grid {
   display: grid;
   background-color: #1B1B1B;
+  grid-template-rows: auto auto 1fr;
+  grid-gap: 5px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.top-bar-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 5px;
+}
+
+.time-detials-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.middle-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 5px;
+}
+
+.bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+  overflow: hidden;
+}
+
+.bottom-right-graphs {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 5px;
 }
