@@ -46,6 +46,7 @@ button {
   border-style: none;
   color: white;
   border-radius: 3px;
+  padding: 5px;
 }
 
 button:hover {
@@ -281,4 +282,28 @@ h1,h2,h3,h4,h5,h6 {
   margin: 0;
   color: white;
   font-size: 13px;
+}
+
+.topic-item-div {
+  padding: 10px;
+  font-size: 13px;
+  background-color: #414141;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.topic-item-div:hover {
+  background-color: #252525
+}
+
+
+.topic-item-div h3 {
+  text-align: left;
+  color: #9593D9;
+}
+
+.topic-item-div h3:nth-child(even) {
+  text-align: right;
+  color: white;
+  font-weight: 400;
 }
