@@ -184,7 +184,7 @@ h1,h2,h3,h4,h5,h6 {
 .app-content-grid {
   display: grid;
   background-color: #1B1B1B;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto 1fr 2fr;
   grid-gap: 5px;
   margin: 10px;
   overflow: hidden;

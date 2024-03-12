@@ -5,6 +5,7 @@
     <title>Clocker</title>
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div class="base-grid">
@@ -60,7 +61,7 @@
             <button>Start</button>
           </div>
           <div class="container">
-            <h5>graph</h5>
+            <canvas id="myChart"></canvas>
           </div>
         </div>
         <div class="bottom-grid">
@@ -96,5 +97,6 @@
       </div>
     </div>
     <script src="frame.js"></script>
+    <script src="graphs.js"></script>
   </body>
 </html>
