@@ -98,7 +98,7 @@ select {
   background-color: #313131;
   border-radius: 3px;
   text-align: center;
-  padding: 10px;
+  padding: 5px 10px;
   display: grid;
   grid-gap: 5px;
 }
@@ -237,8 +237,26 @@ h1,h2,h3,h4,h5,h6 {
   align-self: center;
 }
 
-.project-button {
-  padding: 3px 0px;
+.project-item-div {
+  padding: 3px 10px;
+  font-size: 13px;
+  background-color: #414141;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.project-item-div:hover {
+  background-color: #252525
+}
+
+.project-item-div p,
+.project-item-div h5 {
+  text-align: left;
+}
+
+.project-item-div p:nth-child(even),
+.project-item-div h5:nth-child(even) {
+  text-align: right;
 }
 
 .progress-bar-container {
