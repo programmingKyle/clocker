@@ -31,6 +31,10 @@ function createAnnualHoursGraph() {
         legend: {
           display: false,
         },
+        title: {
+          display: true,
+          text: 'Annual Hours',
+        },
       },
       scales: {
         y: {

@@ -217,7 +217,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .bottom-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr auto;
   grid-gap: 5px;
   overflow: hidden;
 }
@@ -295,7 +295,6 @@ h1,h2,h3,h4,h5,h6 {
 .topic-item-div:hover {
   background-color: #252525
 }
-
 
 .topic-item-div h3 {
   text-align: left;

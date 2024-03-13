@@ -37,6 +37,10 @@ function createChart() {
         legend: {
           display: false,
         },
+        title:{
+          display: true,
+          text: 'Past 30 Days',
+        }
       },
       scales: {
         y: {
