@@ -70,11 +70,20 @@ function createChart() {
 // Initial setup
 monthHours = createChart();
 
-// Resize event listener
 window.addEventListener('resize', () => {
-  // Destroy the existing chart instance
-  monthHours.destroy();
+  // Destroy the existing chart instances for all canvases
+  if (topicHoursGraph) {
+    topicHoursGraph.destroy();
+  }
+  if (annualHoursGraph) {
+    annualHoursGraph.destroy();
+  }
+  if (monthHours) {
+    monthHours.destroy();
+  }
 
-  // Recreate the chart with updated dimensions
+  // Recreate the chart instances for all canvases with updated dimensions
+  topicHoursGraph = createTopicHoursGraph();
+  annualHoursGraph = createAnnualHoursGraph();
   monthHours = createChart();
 });

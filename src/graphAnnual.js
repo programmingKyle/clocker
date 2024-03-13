@@ -63,10 +63,3 @@ function createAnnualHoursGraph() {
 
 // Initial setup
 annualHoursGraph = createAnnualHoursGraph();
-
-// Resize event listener
-window.addEventListener('resize', () => {
-    annualHoursGraph.destroy();
-
-    annualHoursGraph = createAnnualHoursGraph();
-});

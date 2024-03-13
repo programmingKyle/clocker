@@ -43,7 +43,7 @@ function createTopicHoursGraph() {
         }
       },
       maintainAspectRatio: false,
-      responsive: false,
+      responsive: true,
       scales: {
         y: {
           display: true, // Display y-axis
@@ -64,12 +64,3 @@ function createTopicHoursGraph() {
 
 // Initial setup
 topicHoursGraph = createTopicHoursGraph();
-
-// Resize event listener
-window.addEventListener('resize', () => {
-  // Destroy the existing chart instance
-  topicHoursGraph.destroy();
-
-  // Recreate the chart with updated dimensions
-  topicHoursGraph = createTopicHoursGraph();
-});
