@@ -72,8 +72,8 @@ monthHours = createChart();
 
 window.addEventListener('resize', () => {
   // Destroy the existing chart instances for all canvases
-  if (topicHoursGraph) {
-    topicHoursGraph.destroy();
+  if (weekCompareGraph) {
+    weekCompareGraph.destroy();
   }
   if (annualHoursGraph) {
     annualHoursGraph.destroy();
@@ -83,7 +83,7 @@ window.addEventListener('resize', () => {
   }
 
   // Recreate the chart instances for all canvases with updated dimensions
-  topicHoursGraph = createTopicHoursGraph();
+  weekCompareGraph = createWeekCompare();
   annualHoursGraph = createAnnualHoursGraph();
   monthHours = createChart();
 });
