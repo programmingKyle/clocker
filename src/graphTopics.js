@@ -7,41 +7,58 @@ function getRandomNumber(min, max) {
 }
 
 function createTopicHoursGraph() {
-  const topics = ['Topic 1', 'Topic 2', 'Topic 3', 'Topic 4', 'Topic 5'];
-  const data = topics.map(() => getRandomNumber(10, 50));
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const previousWeekHours = days.map(() => getRandomNumber(0.5, 8));
+  const currentWeekHours = days.map(() => getRandomNumber(0.5, 8));
 
   return new Chart(ctxTopicHours, {
-    type: 'doughnut',
+    type: 'line',
     data: {
-      labels: topics,
+      labels: days,
       datasets: [{
-        data: data,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
-          'rgba(153, 102, 255, 0.5)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-        ],
-        borderWidth: 1
+        label: 'Previous Week',
+        data: previousWeekHours,
+        borderColor: 'rgba(169, 169, 169, 0.1)',
+        backgroundColor: 'rgba(255, 99, 132, 0)',
+        borderWidth: 2,
+        fill: false // No fill under the line
+      },
+      {
+        label: 'Current Week',
+        data: currentWeekHours,
+        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0)',
+        borderWidth: 2,
+        fill: false // No fill under the line
       }]
     },
     options: {
       plugins: {
-        legend: {
-          display: false,
+        title: {
+          display: true,
+          text: 'Weekly Hours Comparison',
         },
+        legend: {
+          display: false // Hide legend
+        }
       },
       maintainAspectRatio: false,
-      responsive: false,
-    },
+      responsive: true,
+      scales: {
+        y: {
+          display: true, // Display y-axis
+          ticks: {
+            stepSize: 1, // Step size for y-axis ticks
+            font: {
+              size: 12 // Adjust font size for y-axis ticks
+            }
+          }
+        },
+        x: {
+          display: false // Hide x-axis
+        }
+      }
+    }
   });
 }
 
