@@ -43,7 +43,7 @@ function createTopicHoursGraph() {
         }
       },
       maintainAspectRatio: false,
-      responsive: true,
+      responsive: false,
       scales: {
         y: {
           display: true, // Display y-axis

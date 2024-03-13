@@ -217,7 +217,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .bottom-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr auto;
   grid-gap: 5px;
   overflow: hidden;
 }
