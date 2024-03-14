@@ -22,6 +22,17 @@ const createWindow = () => {
     },
   });
 
+  mainWindow.once('ready-to-show', () => {
+    if (app.isPackaged) {
+      autoUpdater.setFeedURL({
+        provider: 'github',
+        owner: 'programmingKyle',
+        repo: 'clocker',
+      });
+      autoUpdater.checkForUpdatesAndNotify();
+    }
+  });  
+
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
@@ -48,17 +59,6 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
-  }
-});
-
-mainWindow.once('ready-to-show', () => {
-  if (app.isPackaged) {
-    autoUpdater.setFeedURL({
-      provider: 'github',
-      owner: 'programmingKyle',
-      repo: 'clocker',
-    });
-    autoUpdater.checkForUpdatesAndNotify();
   }
 });
 
