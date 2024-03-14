@@ -4,6 +4,7 @@ const quitUpdateButton_el = document.getElementById('quitUpdateButton');
 const updateControlDiv_el = document.getElementById('updateControlDiv');
 
 autoUpdater.autoUpdaterCallback((status) => {
+    console.log(status);
     if (status === 'Update Available'){
         updateOverlay_el.style.display = 'flex';
         if (selectUserTypeOverlay_el.style.display !== 'none'){

@@ -51,6 +51,17 @@ app.on('activate', () => {
   }
 });
 
+mainWindow.once('ready-to-show', () => {
+  if (app.isPackaged) {
+    autoUpdater.setFeedURL({
+      provider: 'github',
+      owner: 'programmingKyle',
+      repo: 'clocker',
+    });
+    autoUpdater.checkForUpdatesAndNotify();
+  }
+});
+
 autoUpdater.on('checking-for-update', () => {
   mainWindow.webContents.send('auto-updater-callback', 'Checking for Update');
 });
