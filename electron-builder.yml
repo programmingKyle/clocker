@@ -1,0 +1,8 @@
+appId: com.squirrel.programmingKyle.clocker
+productName: Clocker
+win:
+  target: nsis
+  artifactName: "clocker-${version}.${ext}"
+publish:
+  provider: github
+  repo: programmingKyle/clocker
