@@ -4,7 +4,7 @@ let updateControlDiv_el;
 autoUpdater.autoUpdaterCallback((status) => {
     if (status === 'Update Available'){
         overlayContainer_el.style.display = 'flex';
-        loadOverlayContent('overlays.html', '#updateContainer');
+        loadOverlayContent('overlays.html', '#updateContainer', autoUpdaterListeners);
     }
     if (status === 'Update Downloaded'){
         updateControlDiv_el.style.display = 'grid';

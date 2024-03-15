@@ -1,4 +1,4 @@
-function loadOverlayContent(url, contentSelector) {
+function loadOverlayContent(url, contentSelector, listenerFunction) {
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -15,7 +15,9 @@ function loadOverlayContent(url, contentSelector) {
                 throw new Error('Specified content not found in the fetched HTML');
             }
             document.getElementById('overlayContainer').innerHTML = selectedContent.outerHTML;
-            autoUpdaterListeners();
+            if (listenerFunction){
+                listenerFunction();
+            }
         })
         .catch(error => {
             console.error('Error loading overlay content:', error);
