@@ -16,16 +16,24 @@ async function addSubtopicListeners(){
         overlayContainer_el.style.display = 'none';
     });
 
-    confirmAddSubtopicButton_el.addEventListener('click', () => {
-
+    confirmAddSubtopicButton_el.addEventListener('click', async () => {
+        const result = await api.subtopicHandler({request: 'Add', topicID: topicNameSelect_el.value, subtopicName: subtopicNameInput_el.value});
+        if (result === true){
+            overlayContainer_el.style.display = 'none';
+        } else if (result === 'duplicate'){
+            console.log('duplicate');
+        } else {
+            console.log('error');
+        }
     });
 }
 
-async function topicDropdownForAddSubtopic(dropdown){
+async function topicDropdownForAddSubtopic(dropdown) {
     dropdown.innerHTML = '';
-    activeTopics.forEach(element => {
-        const select_el = document.createElement('option');
-        select_el.textContent = element.topic;
-        dropdown.append(select_el);
+    activeTopics.forEach(topic => {
+        const option_el = document.createElement('option');
+        option_el.textContent = topic.topic;
+        option_el.value = topic.id; // Concatenate ID and name
+        dropdown.append(option_el);
     });
 }

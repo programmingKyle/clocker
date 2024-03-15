@@ -21,7 +21,8 @@ db.run(`
     subtopic TEXT,
     topicID INTEGER,
     status TEXT,
-    previousTime TIMESTAMP
+    previousTime TIMESTAMP,
+    UNIQUE(subtopic, topicID)
   );
 `);
 
@@ -212,15 +213,20 @@ async function getTopicsFromDatabase(status){
   return result;
 }
 
-ipcMain.handle('subtopic-handler', (req, data) => {
+ipcMain.handle('subtopic-handler', async (req, data) => {
   if (!data || !data.request) return;
+  let result;
   switch(data.request){
     case 'Add':
-      addSubtopic(data.subtopicName, data.topicID);
+      result = await addSubtopic(data.subtopicName, data.topicID);
       break;
   }
+  return result;
 });
 
-function addSubtopic(subtopicName, topicID){
-  console.log(subtopicName, topicID);
+async function addSubtopic(subtopicName, topicID){
+  const sqlStatement = `INSERT INTO subtopics (subtopic, topicID, status, previousTime) VALUES (?, ?, ?, CURRENT_TIMESTAMP)`;
+  const params = [subtopicName, topicID, 'active'];
+  const result = databaseHandler('run', sqlStatement, params);
+  return result;
 }
