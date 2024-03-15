@@ -220,6 +220,9 @@ ipcMain.handle('subtopic-handler', async (req, data) => {
     case 'Add':
       result = await addSubtopic(data.subtopicName, data.topicID);
       break;
+    case 'Get':
+      result = await getSubtopics(data.status);
+      break;
   }
   return result;
 });
@@ -228,5 +231,12 @@ async function addSubtopic(subtopicName, topicID){
   const sqlStatement = `INSERT INTO subtopics (subtopic, topicID, status, previousTime) VALUES (?, ?, ?, CURRENT_TIMESTAMP)`;
   const params = [subtopicName, topicID, 'active'];
   const result = databaseHandler('run', sqlStatement, params);
+  return result;
+}
+
+async function getSubtopics(status){
+  const sqlStatement = `SELECT * FROM subtopics WHERE status = ?`;
+  const params = [status];
+  const result = databaseHandler('all', sqlStatement, params);
   return result;
 }
