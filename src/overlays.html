@@ -8,9 +8,11 @@
     </div>
 </div>
 
-
 <div id="addTopicContainer" class="centered-container" style="text-align: center;">
-  <div style="display: grid">
-    <h2>Add Topic</h2>
+  <div style="display: grid; grid-template-columns: 1fr auto;">
+      <h1>Add a Topic</h1>
+      <button id="addTopicCloseButton" class="slim-button fa-solid fa-x"></button>
   </div>
+  <input id="topicNameInput" type="text" placeholder="Topic Name" style="padding: 10px;">
+  <button id="confirmAddTopicButton" class="input-button">Add</button>
 </div>

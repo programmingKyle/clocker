@@ -1,5 +1,4 @@
 function loadOverlayContent(url, contentSelector) {
-    console.log(contentSelector);
     fetch(url)
         .then(response => {
             if (!response.ok) {

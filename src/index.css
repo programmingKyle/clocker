@@ -140,8 +140,7 @@ p {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: center;
   display: grid;
-  height: 70%;
-  width: 75%;
+  width: 50%;
   grid-gap: 5px;
 }
 
