@@ -15,6 +15,7 @@ function addTopicListeners(){
     });
 
     confirmAddTopicButton_el.addEventListener('click', async () => {
+        if (topicNameInput_el.value === '') return topicNameInput_el.classList.add('error');
         const result = await api.topicHandler({request: 'Add', topicName: topicNameInput_el.value});
         console.log(result);
         if (result === true){
