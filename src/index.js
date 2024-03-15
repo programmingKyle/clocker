@@ -139,15 +139,43 @@ function toggleMaximize(){
 //
 //
 
+function databaseHandler(request, query, params) {
+  if (request === 'run') {
+      return new Promise((resolve, reject) => {
+          db.run(query, params, (err) => {
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve();
+              }
+          });  
+      });
+  } else if (request === 'all') {
+      return new Promise((resolve, reject) => {
+          db.all(query, params, (err, rows) => {
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve(rows);
+              }
+          });  
+      });
+  } else {
+      console.error('Invalid Database Request');
+  }
+}
+
 ipcMain.handle('topic-handler', (req, data) => {
   if (!data || !data.request) return;
   switch(data.request) {
     case 'Add':
-      addTopic(data.topicName);
+      addTopicToDatabase(data.topicName);
       break;
   }
 });
 
-function addTopic(topicName){
-  console.log(topicName);
+function addTopicToDatabase(topicName){
+  const sqlStatement = `INSERT INTO topics (topic, status, previousTime) VALUES (?, ?, CURRENT_TIMESTAMP)`;
+  const params = [topicName, 'active'];
+  databaseHandler('run', sqlStatement, params);
 }
