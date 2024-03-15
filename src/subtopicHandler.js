@@ -16,11 +16,20 @@ async function addSubtopicListeners(){
         overlayContainer_el.style.display = 'none';
     });
 
+    subtopicNameInput_el.addEventListener('click', () => {
+        if (subtopicNameInput_el.classList.contains('error')){
+            subtopicNameInput_el.classList.remove('error');
+        }
+    })
+
     confirmAddSubtopicButton_el.addEventListener('click', async () => {
         if (subtopicNameInput_el.value === '') return subtopicNameInput_el.classList.add('error');
         const result = await api.subtopicHandler({request: 'Add', topicID: topicNameSelect_el.value, subtopicName: subtopicNameInput_el.value});
         if (result === true){
             overlayContainer_el.style.display = 'none';
+            if (subtopicNameInput_el.classList.contains('error')){
+                subtopicNameInput_el.classList.remove('error');
+            }    
         } else if (result === 'duplicate'){
             subtopicNameInput_el.classList.add('error');
         } else {
