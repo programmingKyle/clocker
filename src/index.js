@@ -9,10 +9,10 @@ const db = new sqlite3.Database(`${appDataPath}/database.db`);
 db.run(`
   CREATE TABLE IF NOT EXISTS topics (
     id INTEGER PRIMARY KEY,
-    topic TEXT,
+    topic TEXT UNIQUE,
     status TEXT,
-    previousTime DATE
-  )
+    previousTime TIMESTAMP
+  );
 `);
 
 let mainWindow
@@ -142,14 +142,22 @@ function toggleMaximize(){
 function databaseHandler(request, query, params) {
   if (request === 'run') {
       return new Promise((resolve, reject) => {
-          db.run(query, params, (err) => {
-              if (err) {
-                  reject(err);
+        db.run(query, params, (err) => {
+          if (err) {
+              if (err.message.includes('UNIQUE constraint failed')) {
+                  // Handle unique constraint violation error
+                  console.error('Error: Duplicate entry');
+                  resolve('duplicate');
               } else {
-                  resolve();
+                  // Handle other errors
+                  console.error('Error:', err.message);
+                  resolve(false); // Or reject(err) if you want to propagate the error
               }
-          });  
+          } else {
+              resolve(true); // Operation successful
+          }
       });
+    });
   } else if (request === 'all') {
       return new Promise((resolve, reject) => {
           db.all(query, params, (err, rows) => {
@@ -165,17 +173,19 @@ function databaseHandler(request, query, params) {
   }
 }
 
-ipcMain.handle('topic-handler', (req, data) => {
+ipcMain.handle('topic-handler', async (req, data) => {
   if (!data || !data.request) return;
   switch(data.request) {
     case 'Add':
-      addTopicToDatabase(data.topicName);
-      break;
+      const result = await addTopicToDatabase(data.topicName);
+      console.log(result);
+      return result;
   }
 });
 
-function addTopicToDatabase(topicName){
+async function addTopicToDatabase(topicName){
   const sqlStatement = `INSERT INTO topics (topic, status, previousTime) VALUES (?, ?, CURRENT_TIMESTAMP)`;
   const params = [topicName, 'active'];
-  databaseHandler('run', sqlStatement, params);
+  const result = databaseHandler('run', sqlStatement, params);
+  return result;
 }

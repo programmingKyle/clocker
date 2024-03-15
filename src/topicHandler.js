@@ -15,7 +15,15 @@ function addTopicListeners(){
     });
 
     confirmAddTopicButton_el.addEventListener('click', async () => {
-        console.log(topicNameInput_el.value);
-        api.topicHandler({request: 'Add', topicName: topicNameInput_el.value});
+        const result = await api.topicHandler({request: 'Add', topicName: topicNameInput_el.value});
+        console.log(result);
+        if (result === true){
+            topicNameInput_el.value = '';
+            overlayContainer_el.style.display = 'none';    
+        } else if (result === 'duplicate') {
+            topicNameInput_el.classList.add('error');
+        } else {
+            topicNameInput_el.classList.add('error');
+        }
     });
 }
