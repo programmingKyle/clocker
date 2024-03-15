@@ -10,7 +10,6 @@ function loadOverlayContent(url, contentSelector, listenerFunction) {
             const tempContainer = document.createElement('div');
             tempContainer.innerHTML = html;
             const selectedContent = tempContainer.querySelector(contentSelector);
-            console.log(selectedContent);
             if (!selectedContent) {
                 throw new Error('Specified content not found in the fetched HTML');
             }

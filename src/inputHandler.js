@@ -2,7 +2,6 @@
 const topicSelect_el = document.getElementById('topicSelect');
 
 const subtopicSelect_el = document.getElementById('subtopicSelect');
-const addSubtopicButton_el = document.getElementById('addSubtopicButton');
 
 async function populateTopicSelect(){
     topicSelect_el.innerHTML = '';
