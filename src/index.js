@@ -175,17 +175,28 @@ function databaseHandler(request, query, params) {
 
 ipcMain.handle('topic-handler', async (req, data) => {
   if (!data || !data.request) return;
+  let result;
   switch(data.request) {
     case 'Add':
-      const result = await addTopicToDatabase(data.topicName);
-      console.log(result);
-      return result;
+      result = await addTopicToDatabase(data.topicName);
+      break;
+    case 'Get':
+      result = await getTopicsFromDatabase(data.status);
+      break;
   }
+  return result;
 });
 
 async function addTopicToDatabase(topicName){
   const sqlStatement = `INSERT INTO topics (topic, status, previousTime) VALUES (?, ?, CURRENT_TIMESTAMP)`;
   const params = [topicName, 'active'];
   const result = databaseHandler('run', sqlStatement, params);
+  return result;
+}
+
+async function getTopicsFromDatabase(status){
+  const sqlStatement = `SELECT * FROM topics WHERE status = ?`;
+  const params = [status];
+  const result = databaseHandler('all', sqlStatement, params);
   return result;
 }
