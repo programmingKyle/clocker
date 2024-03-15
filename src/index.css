@@ -92,7 +92,7 @@ select {
 .frame-grid button {
   -webkit-app-region: no-drag;
   font-size: 12px;
-  padding: 10px;
+  padding: 5px 10px;
 }
 
 .container {
