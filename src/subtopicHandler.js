@@ -11,11 +11,14 @@ async function addSubtopicListeners(){
     const subtopicNameInput_el = document.getElementById('subtopicNameInput');
     const confirmAddSubtopicButton_el = document.getElementById('confirmAddSubtopicButton');
     await topicDropdownForAddSubtopic(topicNameSelect_el);
+
     addSubtopicCloseButton_el.addEventListener('click', () => {
         overlayContainer_el.style.display = 'none';
     });
 
+    confirmAddSubtopicButton_el.addEventListener('click', () => {
 
+    });
 }
 
 async function topicDropdownForAddSubtopic(dropdown){

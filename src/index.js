@@ -15,6 +15,17 @@ db.run(`
   );
 `);
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS subtopics (
+    id INTEGER PRIMARY KEY,
+    subtopic TEXT,
+    topicID INTEGER,
+    status TEXT,
+    previousTime TIMESTAMP
+  );
+`);
+
+
 let mainWindow
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -199,4 +210,17 @@ async function getTopicsFromDatabase(status){
   const params = [status];
   const result = databaseHandler('all', sqlStatement, params);
   return result;
+}
+
+ipcMain.handle('subtopic-handler', (req, data) => {
+  if (!data || !data.request) return;
+  switch(data.request){
+    case 'Add':
+      addSubtopic(data.subtopicName, data.topicID);
+      break;
+  }
+});
+
+function addSubtopic(subtopicName, topicID){
+  console.log(subtopicName, topicID);
 }
