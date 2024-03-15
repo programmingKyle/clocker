@@ -14,7 +14,8 @@ function addTopicListeners(){
         overlayContainer_el.style.display = 'none';
     });
 
-    confirmAddTopicButton_el.addEventListener('click', () => {
+    confirmAddTopicButton_el.addEventListener('click', async () => {
         console.log(topicNameInput_el.value);
+        api.topicHandler({request: 'Add', topicName: topicNameInput_el.value});
     });
 }

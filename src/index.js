@@ -2,6 +2,19 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
 
+const sqlite3 = require('sqlite3').verbose();
+const appDataPath = app.getPath('userData');
+const db = new sqlite3.Database(`${appDataPath}/database.db`);
+
+db.run(`
+  CREATE TABLE IF NOT EXISTS topics (
+    id INTEGER PRIMARY KEY,
+    topic TEXT,
+    status TEXT,
+    previousTime DATE
+  )
+`);
+
 let mainWindow
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -96,9 +109,6 @@ ipcMain.handle('close-app', () => {
   app.quit();
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
-
 let isMaximized;
 ipcMain.handle('frame-handler', (req, data) => {
   if (!data || !data.request) return;
@@ -122,4 +132,22 @@ function toggleMaximize(){
     mainWindow.maximize();
   }
   isMaximized = !isMaximized;
+}
+
+//
+//
+//
+//
+
+ipcMain.handle('topic-handler', (req, data) => {
+  if (!data || !data.request) return;
+  switch(data.request) {
+    case 'Add':
+      addTopic(data.topicName);
+      break;
+  }
+});
+
+function addTopic(topicName){
+  console.log(topicName);
 }

@@ -2,6 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
     frameHandler: (data) => ipcRenderer.invoke('frame-handler', data),
+    topicHandler: (data) => ipcRenderer.invoke('topic-handler', data),
 });
 
 contextBridge.exposeInMainWorld('autoUpdater', {
