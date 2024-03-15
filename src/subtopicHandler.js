@@ -17,13 +17,14 @@ async function addSubtopicListeners(){
     });
 
     confirmAddSubtopicButton_el.addEventListener('click', async () => {
+        if (subtopicNameInput_el.value === '') return subtopicNameInput_el.classList.add('error');
         const result = await api.subtopicHandler({request: 'Add', topicID: topicNameSelect_el.value, subtopicName: subtopicNameInput_el.value});
         if (result === true){
             overlayContainer_el.style.display = 'none';
         } else if (result === 'duplicate'){
-            console.log('duplicate');
+            subtopicNameInput_el.classList.add('error');
         } else {
-            console.log('error');
+            subtopicNameInput_el.classList.add('error');
         }
     });
 }
