@@ -12,7 +12,8 @@ async function populateTopicSelect(){
             topicOption_el.textContent = element.topic;
             topicOption_el.value = element.id;
             topicSelect_el.append(topicOption_el);
-        });    
+        });
+        await populateSubtopicSelect(topicSelect_el.value);
     } else {
         addSubtopicButton_el.style.visibility = 'hidden';
     }
@@ -25,7 +26,6 @@ topicSelect_el.addEventListener('change', async () => {
 async function populateSubtopicSelect(topic){
     subtopicSelect_el.innerHTML = '';
     activeSubtopics.forEach(element => {
-        console.log(topic, element.topicID);
         if (parseInt(topic) === parseInt(element.topicID)){
             const subtopicOption_el = document.createElement('option');
             subtopicOption_el.textContent = element.subtopic;

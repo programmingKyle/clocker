@@ -5,8 +5,8 @@ let activeTopics;
 let activeSubtopics;
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await getAllActiveTopics();
     await getAllActiveSubtopics();
+    await getAllActiveTopics();
 });
 
 async function getAllActiveTopics(){
