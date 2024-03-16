@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld('api', {
     topicHandler: (data) => ipcRenderer.invoke('topic-handler', data),
     subtopicHandler: (data) => ipcRenderer.invoke('subtopic-handler', data),
     logTimeHandler: (data) => ipcRenderer.invoke('log-time-handler', data),
+    quickTimesHandler: (data) => ipcRenderer.invoke('quick-times-handler', data),
 });
 
 contextBridge.exposeInMainWorld('autoUpdater', {

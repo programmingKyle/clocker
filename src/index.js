@@ -259,3 +259,31 @@ ipcMain.handle('log-time-handler', (req, data) => {
   const result = databaseHandler('run', sqlStatement, params);
   return result;
 });
+
+ipcMain.handle('quick-times-handler', (req, data) => {
+  if (!data || !data.request) return;
+  let times;
+  switch(data.request){
+    case 'Total':
+      times = getAllQuickTimes();
+      break;
+    case 'Monthly':
+      break;
+    case 'Weekly':
+      break;
+    case 'Today':
+      break;
+  }
+  return times;
+});
+
+function getAllQuickTimes(){
+  const sqlStatement = `SELECT * FROM clock`;
+  const params = [];
+  const result = databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
+function getQuickTimes(timeFrame){
+  console.log('Grab specific times');
+}
