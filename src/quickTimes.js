@@ -11,4 +11,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function populateQuickTimes(){
     totalTimeText_el.textContent = await api.quickTimesHandler({request: 'Total'});
     totalMonthlyText_el.textContent = await api.quickTimesHandler({request: 'Specific', timeFrame: 30});
+    totalWeeklyText_el.textContent = await api.quickTimesHandler({request: 'Specific', timeFrame: 7});
+    totalTodayText_el.textContent = await api.quickTimesHandler({request: 'Specific', timeFrame: 1});
 }
