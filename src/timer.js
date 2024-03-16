@@ -1,13 +1,30 @@
 const timerText_el = document.getElementById('timerText');
 const toggleTimerButton_el = document.getElementById('toggleTimerButton');
 
+let timerActive;
 let logStartTime;
 let logStopTime;
 
+
 toggleTimerButton_el.addEventListener('click', () => {
-    logStartTime = Date.now();
-    timerInterval = setInterval(updateTimer, 10);
+    toggleTimerButton_el.textContent = timerActive ? 'Stop' : 'Start';
+    timerHandler(timerActive);
 });
+
+function timerHandler(isActive){
+    if (!isActive){
+        timerActive = true;
+        logStartTime = Date.now();
+        timerInterval = setInterval(updateTimer, 10);    
+    } else {
+        logStopTime = Date.now();
+        timerActive = false;
+        const logTime = logStopTime - logStartTime;
+        const formatLogTime = formatTime(logTime);
+        console.log(formatLogTime);
+        clearInterval(timerInterval);
+    }
+}
 
 function updateTimer(){
     const currentTime = Date.now() - logStartTime;
