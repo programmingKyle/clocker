@@ -48,9 +48,6 @@ function formatTime(milliseconds){
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${millisecondsPart.toString().padStart(2, '0')}`;
 };
 
-function logTimeHandler(time){
-    console.log(topicSelect_el.value);
-    console.log(subtopicSelect_el.value);
-    console.log(projectInput_el.value);
-    console.log(time);
+async function logTimeHandler(time){
+    const result = await api.logTimeHandler({topicID: topicSelect_el.value, subtopicID: subtopicSelect_el.value, project: projectInput_el.value, time});
 }

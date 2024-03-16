@@ -251,3 +251,11 @@ async function getSubtopics(status){
   const result = databaseHandler('all', sqlStatement, params);
   return result;
 }
+
+ipcMain.handle('log-time-handler', (req, data) => {
+  if (!data) return;
+  const sqlStatement = `INSERT INTO clock (topicID, subtopicID, project, time, date) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+  const params = [data.topicID, data.subtopicID, data.project, data.time];
+  const result = databaseHandler('run', sqlStatement, params);
+  return result;
+});
