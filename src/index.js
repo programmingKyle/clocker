@@ -260,12 +260,12 @@ ipcMain.handle('log-time-handler', (req, data) => {
   return result;
 });
 
-ipcMain.handle('quick-times-handler', (req, data) => {
+ipcMain.handle('quick-times-handler', async (req, data) => {
   if (!data || !data.request) return;
   let times;
   switch(data.request){
     case 'Total':
-      times = getAllQuickTimes();
+      times = await getAllQuickTimes();
       break;
     case 'Monthly':
       break;
@@ -274,16 +274,30 @@ ipcMain.handle('quick-times-handler', (req, data) => {
     case 'Today':
       break;
   }
-  return times;
+  const calcTime = await calculateTotalTime(times);
+  return calcTime;
 });
 
-function getAllQuickTimes(){
+async function getAllQuickTimes(){
   const sqlStatement = `SELECT * FROM clock`;
   const params = [];
   const result = databaseHandler('all', sqlStatement, params);
   return result;
 }
 
-function getQuickTimes(timeFrame){
-  console.log('Grab specific times');
+async function calculateTotalTime(entries) {
+  let totalTime = 0;
+
+  entries.forEach(element => {
+      const timeComponents = element.time.split(':');
+
+      const hours = parseInt(timeComponents[0], 10);
+      const minutes = parseInt(timeComponents[1], 10);
+      const seconds = parseInt(timeComponents[2], 10);
+      const milliseconds = parseInt(timeComponents[3], 10);
+
+      totalTime += hours * 3600000 + minutes * 60000 + seconds * 1000 + milliseconds;
+  });
+  totalTime /= 3600000;
+  return totalTime.toFixed(1);
 }
