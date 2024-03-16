@@ -5,7 +5,6 @@ let timerActive;
 let logStartTime;
 let logStopTime;
 
-
 toggleTimerButton_el.addEventListener('click', () => {
     const result = timerErrorHandling();
     if (result){
@@ -39,7 +38,8 @@ function timerHandler(isActive){
 function startTimer(){
     timerActive = true;
     logStartTime = Date.now();
-    timerInterval = setInterval(updateTimer, 10);    
+    timerInterval = setInterval(updateTimer, 10);
+    toggleInputsDiv();
 }
 
 function stopTimer(){
@@ -49,6 +49,7 @@ function stopTimer(){
     const formatLogTime = formatTime(logTime);
     clearInterval(timerInterval);
     logTimeHandler(formatLogTime);
+    toggleInputsDiv();
 }
 
 function updateTimer(){

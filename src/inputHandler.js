@@ -3,6 +3,9 @@ const topicSelect_el = document.getElementById('topicSelect');
 const subtopicSelect_el = document.getElementById('subtopicSelect');
 const projectInput_el = document.getElementById('projectInput');
 
+const timerInputsDiv_el = document.getElementById('timerInputsDiv');
+const displayInputsDiv_el = document.getElementById('displayInputsDiv');
+
 async function populateTopicSelect(){
     topicSelect_el.innerHTML = '';
     if (activeTopics.length > 0){
@@ -51,4 +54,29 @@ function errorTimeout(element){
             element.classList.remove('error');
         }
     }, 1000);
+}
+
+// Used to either toggle the inputs for clocking or displaying the information of
+// what is being clocked
+function toggleInputsDiv() {
+    if (timerInputsDiv_el.style.display !== 'none'){
+        populateDisplayInputs();
+        timerInputsDiv_el.style.display = 'none';
+        displayInputsDiv_el.style.display = 'grid';
+    } else {
+        timerInputsDiv_el.style.display = 'grid';
+        displayInputsDiv_el.style.display = 'none';
+    }
+}
+
+// Used when hitting the start button it will display the inputs that the user
+// has selected
+function populateDisplayInputs(){
+    const currentTimerTopicText_el = document.getElementById('currentTimerTopicText');
+    const currentSubtopicText_el = document.getElementById('currentSubtopicText');
+    const currentProjectText_el = document.getElementById('currentProjectText');
+
+    currentTimerTopicText_el.textContent = topicSelect_el.value;
+    currentSubtopicText_el.textContent = subtopicSelect_el.value === 'null' ? 'Not Selected' : subtopicSelect_el.value;
+    currentProjectText_el.textContent = projectInput_el.value;
 }

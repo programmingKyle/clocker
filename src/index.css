@@ -311,3 +311,21 @@ h1,h2,h3,h4,h5,h6 {
   color: white;
   font-weight: 400;
 }
+
+.display-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #1B1B1B;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.display-inputs h5{
+  text-align: left;
+}
+
+.display-inputs h5:nth-child(odd) {
+  text-align: right;
+  color: white;
+  font-weight: 400;
+}

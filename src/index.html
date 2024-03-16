@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="middle-grid">
-          <div class="container">
+          <div class="container" style="grid-template-rows: 1fr auto 1fr auto;">
             <div class="time-details-div">
               <h5>Total Time:</h5>
               <h5>100</h5>
@@ -42,7 +42,7 @@
               <h5>5</h5>
             </div>
             <h2 id="timerText">00:00:00:00</h2>
-            <div class="inputs-div">
+            <div id="timerInputsDiv" class="inputs-div">
               <h6>Topic</h6>
               <select id="topicSelect"></select>
               <button id="addTopicButton" class="slim-button fas fa-plus"></button>
@@ -53,6 +53,17 @@
 
               <h6>Project</h6>
               <input id="projectInput" type="text">
+            </div>
+            <div id="displayInputsDiv" style="display: none; grid-gap: 2px;">
+              <div class="display-inputs">
+                <h4 style="grid-column: span 2;">Recording in Progress</h4>
+                <h5>Topic</h5>
+                <h5 id="currentTimerTopicText">Topic</h5>
+                <h5>Subtopic</h5>
+                <h5 id="currentSubtopicText">Subtopic</h5>
+                <h5>Project</h5>
+                <h5 id="currentProjectText">Project</h5>  
+              </div>
             </div>
             <button id="toggleTimerButton">Start</button>
           </div>
