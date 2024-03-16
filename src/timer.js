@@ -7,6 +7,10 @@ let logStopTime;
 
 
 toggleTimerButton_el.addEventListener('click', () => {
+    if (topicSelect_el.value === ''){
+        errorHandling(topicSelect_el);
+        return;
+    }
     toggleTimerButton_el.textContent = timerActive ? 'Start' : 'Stop';
     timerHandler(timerActive);
 });
