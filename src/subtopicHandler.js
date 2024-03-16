@@ -26,6 +26,8 @@ async function addSubtopicListeners(){
         if (subtopicNameInput_el.value === '') return subtopicNameInput_el.classList.add('error');
         const result = await api.subtopicHandler({request: 'Add', topicID: topicNameSelect_el.value, subtopicName: subtopicNameInput_el.value});
         if (result === true){
+            await getAllActiveSubtopics();
+            await populateSubtopicSelect(topicSelect_el.value);
             overlayContainer_el.style.display = 'none';
             if (subtopicNameInput_el.classList.contains('error')){
                 subtopicNameInput_el.classList.remove('error');
