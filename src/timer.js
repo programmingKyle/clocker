@@ -7,23 +7,31 @@ let logStopTime;
 
 
 toggleTimerButton_el.addEventListener('click', () => {
-    toggleTimerButton_el.textContent = timerActive ? 'Stop' : 'Start';
+    toggleTimerButton_el.textContent = timerActive ? 'Start' : 'Stop';
     timerHandler(timerActive);
 });
 
 function timerHandler(isActive){
     if (!isActive){
-        timerActive = true;
-        logStartTime = Date.now();
-        timerInterval = setInterval(updateTimer, 10);    
+        startTimer();
     } else {
-        logStopTime = Date.now();
-        timerActive = false;
-        const logTime = logStopTime - logStartTime;
-        const formatLogTime = formatTime(logTime);
-        console.log(formatLogTime);
-        clearInterval(timerInterval);
+        stopTimer();
     }
+}
+
+function startTimer(){
+    timerActive = true;
+    logStartTime = Date.now();
+    timerInterval = setInterval(updateTimer, 10);    
+}
+
+function stopTimer(){
+    logStopTime = Date.now();
+    timerActive = false;
+    const logTime = logStopTime - logStartTime;
+    const formatLogTime = formatTime(logTime);
+    clearInterval(timerInterval);
+    logTimeHandler(formatLogTime);
 }
 
 function updateTimer(){
@@ -39,3 +47,10 @@ function formatTime(milliseconds){
     const millisecondsPart = Math.floor(date.getUTCMilliseconds() / 10);
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${millisecondsPart.toString().padStart(2, '0')}`;
 };
+
+function logTimeHandler(time){
+    console.log(topicSelect_el.value);
+    console.log(subtopicSelect_el.value);
+    console.log(projectInput_el.value);
+    console.log(time);
+}

@@ -1,7 +1,7 @@
 // This handles all the drop down menus and start / stop buttons
 const topicSelect_el = document.getElementById('topicSelect');
-
 const subtopicSelect_el = document.getElementById('subtopicSelect');
+const projectInput_el = document.getElementById('projectInput');
 
 async function populateTopicSelect(){
     topicSelect_el.innerHTML = '';
@@ -27,9 +27,10 @@ async function populateSubtopicSelect(topic){
     subtopicSelect_el.innerHTML = '';
     activeSubtopics.forEach(element => {
         if (parseInt(topic) === parseInt(element.topicID)){
+            console.log(element);
             const subtopicOption_el = document.createElement('option');
             subtopicOption_el.textContent = element.subtopic;
-            subtopicOption_el.value = element.topicID;
+            subtopicOption_el.value = element.id;
             subtopicSelect_el.append(subtopicOption_el);
         }
     });
