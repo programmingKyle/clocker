@@ -5,11 +5,10 @@ const totalWeeklyText_el = document.getElementById('totalWeeklyText');
 const totalTodayText_el = document.getElementById('totalTodayText');
 
 document.addEventListener('DOMContentLoaded', async () => {
-    totalTime = await getTotalQuickTime();
+    populateQuickTimes();
 });
 
-async function getTotalQuickTime(){
-    const result = await api.quickTimesHandler({request: 'Total'});
-    return result;
+async function populateQuickTimes(){
+    totalTimeText_el.textContent = await api.quickTimesHandler({request: 'Total'});
+    totalMonthlyText_el.textContent = await api.quickTimesHandler({request: 'Specific', timeFrame: 30});
 }
-

@@ -267,15 +267,16 @@ ipcMain.handle('quick-times-handler', async (req, data) => {
     case 'Total':
       times = await getAllQuickTimes();
       break;
-    case 'Monthly':
-      break;
-    case 'Weekly':
-      break;
-    case 'Today':
+    case 'Specific':
+      times = await getSpecificTimes(data.timeFrame);
       break;
   }
-  const calcTime = await calculateTotalTime(times);
-  return calcTime;
+  if (times){
+    const calcTime = await calculateTotalTime(times);
+    return calcTime;  
+  } else {
+    return;
+  }
 });
 
 async function getAllQuickTimes(){
@@ -284,6 +285,22 @@ async function getAllQuickTimes(){
   const result = databaseHandler('all', sqlStatement, params);
   return result;
 }
+
+async function getSpecificTimes(dayCount) {
+  // Calculate the start date based on the dayCount
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - (dayCount - 1));
+  const formattedStartDate = startDate.toISOString().split('T')[0];
+
+  // Construct the SQL statement to fetch entries within the specified timeframe
+  const sqlStatement = `SELECT * FROM clock WHERE date >= ?`;
+  const params = [formattedStartDate];
+  
+  // Execute the query
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
 
 async function calculateTotalTime(entries) {
   let totalTime = 0;
