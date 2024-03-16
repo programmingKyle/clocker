@@ -24,7 +24,10 @@ async function addSubtopicListeners(){
 
     confirmAddSubtopicButton_el.addEventListener('click', async () => {
         if (subtopicNameInput_el.value === '') return subtopicNameInput_el.classList.add('error');
-        const result = await api.subtopicHandler({request: 'Add', topicID: topicNameSelect_el.value, subtopicName: subtopicNameInput_el.value});
+        const words = subtopicNameInput_el.value.split(' ');
+        const formattedWords = words.map(word => capitalizeFirstLetter(word));
+        const formattedTopic = formattedWords.join(' ');
+        const result = await api.subtopicHandler({request: 'Add', topicID: topicNameSelect_el.value, subtopicName: formattedTopic});
         if (result === true){
             await getAllActiveSubtopics();
             await populateSubtopicSelect(topicSelect_el.value);
