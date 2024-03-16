@@ -26,6 +26,17 @@ db.run(`
   );
 `);
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS clock (
+    id INTEGER PRIMARY KEY,
+    topicID INTEGER,
+    subtopicID INTEGER,
+    project TEXT,
+    time TEXT,
+    date DATE
+  )
+`);
+
 
 let mainWindow
 

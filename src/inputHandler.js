@@ -27,7 +27,6 @@ async function populateSubtopicSelect(topic){
     subtopicSelect_el.innerHTML = '';
     activeSubtopics.forEach(element => {
         if (parseInt(topic) === parseInt(element.topicID)){
-            console.log(element);
             const subtopicOption_el = document.createElement('option');
             subtopicOption_el.textContent = element.subtopic;
             subtopicOption_el.value = element.id;
