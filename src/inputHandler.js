@@ -25,6 +25,11 @@ topicSelect_el.addEventListener('change', async () => {
 
 async function populateSubtopicSelect(topic){
     subtopicSelect_el.innerHTML = '';
+
+    const blankSubtopicOption_el = document.createElement('option');
+    blankSubtopicOption_el.value = null;
+    subtopicSelect_el.append(blankSubtopicOption_el);
+
     activeSubtopics.forEach(element => {
         if (parseInt(topic) === parseInt(element.topicID)){
             const subtopicOption_el = document.createElement('option');
