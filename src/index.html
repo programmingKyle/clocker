@@ -41,7 +41,7 @@
               <h5>Time Today:</h5>
               <h5>5</h5>
             </div>
-            <h2>00:00:00:00</h2>
+            <h2 id="timerText">00:00:00:00</h2>
             <div class="inputs-div">
               <h6>Topic</h6>
               <select id="topicSelect"></select>
@@ -54,7 +54,7 @@
               <h6>Project</h6>
               <input type="text">
             </div>
-            <button>Start</button>
+            <button id="toggleTimerButton">Start</button>
           </div>
           <div class="container">
             <canvas id="monthHoursGraph"></canvas>
@@ -102,5 +102,6 @@
     <script src="subtopicHandler.js"></script>
     <script src="inputHandler.js"></script>
     <script src="infoHandler.js"></script>
+    <script src="timer.js"></script>
   </body>
 </html>
