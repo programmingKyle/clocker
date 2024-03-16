@@ -7,13 +7,26 @@ let logStopTime;
 
 
 toggleTimerButton_el.addEventListener('click', () => {
-    if (topicSelect_el.value === ''){
-        errorHandling(topicSelect_el);
+    const result = timerErrorHandling();
+    if (result){
+        toggleTimerButton_el.textContent = timerActive ? 'Start' : 'Stop';
+        timerHandler(timerActive);    
+    } else {
         return;
     }
-    toggleTimerButton_el.textContent = timerActive ? 'Start' : 'Stop';
-    timerHandler(timerActive);
 });
+
+function timerErrorHandling() {
+    let isValid = true;
+    const elements = [topicSelect_el, projectInput_el];
+    elements.forEach(element => {
+        if (element.value === '') {
+            isValid = false;
+            errorHandling(element);
+        }
+    });
+    return isValid;
+}
 
 function timerHandler(isActive){
     if (!isActive){
