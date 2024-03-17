@@ -257,8 +257,19 @@ ipcMain.handle('log-time-handler', (req, data) => {
   const sqlStatement = `INSERT INTO clock (topicID, subtopicID, project, time, date) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`;
   const params = [data.topicID, data.subtopicID, data.project, data.time];
   const result = databaseHandler('run', sqlStatement, params);
+
+  updateTopicPreviousClock(data.topicID);
   return result;
 });
+
+// This is used to change the previousClock variable in topic and subtopic tables
+// This will update the order in which topics and subtopics are displayed
+function updateTopicPreviousClock(id){
+  const sqlStatement = `UPDATE topics SET previousTime = CURRENT_TIMESTAMP WHERE id = ?`;
+  const params = [id];
+  const result = databaseHandler('run', sqlStatement, params);
+  return result;
+}
 
 ipcMain.handle('quick-times-handler', async (req, data) => {
   if (!data || !data.request) return;
