@@ -259,6 +259,7 @@ ipcMain.handle('log-time-handler', (req, data) => {
   const result = databaseHandler('run', sqlStatement, params);
 
   updateTopicPreviousClock(data.topicID);
+  updateSubtopicPreviousClock(data.subtopicID);
   return result;
 });
 
@@ -266,6 +267,13 @@ ipcMain.handle('log-time-handler', (req, data) => {
 // This will update the order in which topics and subtopics are displayed
 function updateTopicPreviousClock(id){
   const sqlStatement = `UPDATE topics SET previousTime = CURRENT_TIMESTAMP WHERE id = ?`;
+  const params = [id];
+  const result = databaseHandler('run', sqlStatement, params);
+  return result;
+}
+
+function updateSubtopicPreviousClock(id){
+  const sqlStatement = `UPDATE subtopics SET previousTime = CURRENT_TIMESTAMP WHERE id = ?`;
   const params = [id];
   const result = databaseHandler('run', sqlStatement, params);
   return result;

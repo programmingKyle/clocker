@@ -42,7 +42,7 @@ function startTimer(){
     toggleInputsDiv();
 }
 
-function stopTimer(){
+async function stopTimer(){
     logStopTime = Date.now();
     timerActive = false;
     const logTime = logStopTime - logStartTime;
@@ -69,4 +69,7 @@ function formatTime(milliseconds){
 
 async function logTimeHandler(time){
     const result = await api.logTimeHandler({topicID: topicSelect_el.value, subtopicID: subtopicSelect_el.value, project: projectInput_el.value, time});
+    await getAllActiveTopics();
+    await getAllActiveSubtopics();
+    await populateSubtopicSelect(topicSelect_el.value);
 }
