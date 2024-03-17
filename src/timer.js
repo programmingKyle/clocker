@@ -49,6 +49,7 @@ function stopTimer(){
     const formatLogTime = formatTime(logTime);
     clearInterval(timerInterval);
     logTimeHandler(formatLogTime);
+    populateQuickTimes();
     toggleInputsDiv();
 }
 
