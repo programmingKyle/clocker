@@ -15,12 +15,11 @@ async function populateTopicSelect(){
             return new Date(b.previousTime) - new Date(a.previousTime);
         });
 
-        console.log(activeTopics);
-
         activeTopics.forEach(element => {
             const topicOption_el = document.createElement('option');
             topicOption_el.textContent = element.topic;
             topicOption_el.value = element.id;
+            topicOption_el.dataset.topicName = element.topic;
             topicSelect_el.append(topicOption_el);
         });
         await populateSubtopicSelect(topicSelect_el.value);
@@ -45,6 +44,7 @@ async function populateSubtopicSelect(topic){
             const subtopicOption_el = document.createElement('option');
             subtopicOption_el.textContent = element.subtopic;
             subtopicOption_el.value = element.id;
+            subtopicOption_el.dataset.subtopicName = element.subtopic;
             subtopicSelect_el.append(subtopicOption_el);
         }
     });
@@ -87,7 +87,10 @@ function populateDisplayInputs(){
     const currentSubtopicText_el = document.getElementById('currentSubtopicText');
     const currentProjectText_el = document.getElementById('currentProjectText');
 
-    currentTimerTopicText_el.textContent = topicSelect_el.value;
-    currentSubtopicText_el.textContent = subtopicSelect_el.value === 'null' ? 'Not Selected' : subtopicSelect_el.value;
+    const selectedTopic = topicSelect_el.options[topicSelect_el.selectedIndex].dataset.topicName;
+    const selectedSubtopic = subtopicSelect_el.options[subtopicSelect_el.selectedIndex].dataset.subtopicName;
+        
+    currentTimerTopicText_el.textContent = selectedTopic;
+    currentSubtopicText_el.textContent = subtopicSelect_el.value === 'null' ? 'Not Selected' : selectedSubtopic;
     currentProjectText_el.textContent = projectInput_el.value;
 }
