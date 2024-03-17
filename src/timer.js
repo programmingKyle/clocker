@@ -68,7 +68,11 @@ function formatTime(milliseconds){
 };
 
 async function logTimeHandler(time){
-    const result = await api.logTimeHandler({topicID: topicSelect_el.value, subtopicID: subtopicSelect_el.value, project: projectInput_el.value, time});
+    const words = projectInput_el.value.split(' ');
+    const formattedWords = words.map(word => capitalizeFirstLetter(word));
+    const formattedName = formattedWords.join(' ');
+
+    const result = await api.logTimeHandler({topicID: topicSelect_el.value, subtopicID: subtopicSelect_el.value, project: formattedName, time});
     await getAllActiveTopics();
     await getAllActiveSubtopics();
     await populateSubtopicSelect(topicSelect_el.value);
