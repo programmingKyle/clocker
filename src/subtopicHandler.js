@@ -12,6 +12,8 @@ async function addSubtopicListeners(){
     const confirmAddSubtopicButton_el = document.getElementById('confirmAddSubtopicButton');
     await topicDropdownForAddSubtopic(topicNameSelect_el);
 
+    topicNameSelect_el.value = topicSelect_el.value;
+
     addSubtopicCloseButton_el.addEventListener('click', () => {
         overlayContainer_el.style.display = 'none';
     });
