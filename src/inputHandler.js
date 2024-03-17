@@ -36,15 +36,9 @@ topicSelect_el.addEventListener('change', async () => {
 async function populateSubtopicSelect(topic){
     subtopicSelect_el.innerHTML = '';
 
-    const blankSubtopicOption_el = document.createElement('option');
-    blankSubtopicOption_el.value = null;
-    subtopicSelect_el.append(blankSubtopicOption_el);
-
     activeSubtopics.sort((a, b) => {
         return new Date(b.previousTime) - new Date(a.previousTime);
     });
-
-    console.log(activeSubtopics);
 
     activeSubtopics.forEach(element => {
         if (parseInt(topic) === parseInt(element.topicID)){
@@ -54,6 +48,10 @@ async function populateSubtopicSelect(topic){
             subtopicSelect_el.append(subtopicOption_el);
         }
     });
+
+    const blankSubtopicOption_el = document.createElement('option');
+    blankSubtopicOption_el.value = null;
+    subtopicSelect_el.append(blankSubtopicOption_el);
 }
 
 function errorHandling(element){
