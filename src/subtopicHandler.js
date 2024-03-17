@@ -26,7 +26,7 @@ async function addSubtopicListeners(){
 
     confirmAddSubtopicButton_el.addEventListener('click', async () => {
         if (subtopicNameInput_el.value === '') return subtopicNameInput_el.classList.add('error');
-        const words = subtopicNameInput_el.value.split(' ');
+        const words = subtopicNameInput_el.value.toLowerCase().split(' ');
         const formattedWords = words.map(word => capitalizeFirstLetter(word));
         const formattedTopic = formattedWords.join(' ');
         const result = await api.subtopicHandler({request: 'Add', topicID: topicNameSelect_el.value, subtopicName: formattedTopic});

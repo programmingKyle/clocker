@@ -16,7 +16,7 @@ function addTopicListeners(){
 
     confirmAddTopicButton_el.addEventListener('click', async () => {
         if (topicNameInput_el.value === '') return topicNameInput_el.classList.add('error');
-        const words = topicNameInput_el.value.split(' ');
+        const words = topicNameInput_el.value.toLowerCase().split(' ');
         const formattedWords = words.map(word => capitalizeFirstLetter(word));
         const formattedTopic = formattedWords.join(' ');
         const result = await api.topicHandler({request: 'Add', topicName: formattedTopic});

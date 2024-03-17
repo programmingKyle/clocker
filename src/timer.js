@@ -68,7 +68,7 @@ function formatTime(milliseconds){
 };
 
 async function logTimeHandler(time){
-    const words = projectInput_el.value.split(' ');
+    const words = projectInput_el.value.toLowerCase().split(' ');
     const formattedWords = words.map(word => capitalizeFirstLetter(word));
     const formattedName = formattedWords.join(' ');
 
