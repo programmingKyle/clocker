@@ -37,6 +37,13 @@ db.run(`
   )
 `);
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS projects (
+    id INTEGER PRIMARY KEY,
+    project TEXT,
+    previousTime TIMESTAMP
+  )
+`);
 
 let mainWindow
 
@@ -337,3 +344,6 @@ async function calculateTotalTime(entries) {
   totalTime /= 3600000;
   return totalTime.toFixed(1);
 }
+
+ipcMain.handle('get-recent-projects', () => {
+});
