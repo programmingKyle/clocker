@@ -10,6 +10,13 @@ async function populateTopicSelect(){
     topicSelect_el.innerHTML = '';
     if (activeTopics.length > 0){
         addSubtopicButton_el.style.visibility = 'visible';
+
+        activeTopics.sort((a, b) => {
+            return new Date(b.previousTime) - new Date(a.previousTime);
+        });
+
+        console.log(activeTopics);
+
         activeTopics.forEach(element => {
             const topicOption_el = document.createElement('option');
             topicOption_el.textContent = element.topic;
@@ -32,6 +39,12 @@ async function populateSubtopicSelect(topic){
     const blankSubtopicOption_el = document.createElement('option');
     blankSubtopicOption_el.value = null;
     subtopicSelect_el.append(blankSubtopicOption_el);
+
+    activeSubtopics.sort((a, b) => {
+        return new Date(b.previousTime) - new Date(a.previousTime);
+    });
+
+    console.log(activeSubtopics);
 
     activeSubtopics.forEach(element => {
         if (parseInt(topic) === parseInt(element.topicID)){
