@@ -2,6 +2,11 @@ const projectListDiv_el = document.getElementById('projectListDiv');
 
 async function populateRecentProjects(){
     projectListDiv_el.innerHTML = '';
+
+    activeProjects.sort((a, b) => {
+        return new Date(b.previousTime) - new Date(a.previousTime);
+    });
+
     for (const element of activeProjects){
         const projectItem_el = document.createElement('div');
         projectItem_el.classList.add('project-item-div');
