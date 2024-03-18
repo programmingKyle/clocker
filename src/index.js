@@ -357,10 +357,26 @@ async function calculateTotalTime(entries) {
   return totalTime.toFixed(1);
 }
 
-
 async function addProject(name){
   const sqlStatement = `INSERT INTO projects (project, previousTime) VALUES (?, CURRENT_TIMESTAMP)`;
   const params = [name];
   const result = databaseHandler('run', sqlStatement, params);
+  return result;
+}
+
+ipcMain.handle('project-handler', async (req, data) => {
+  if (!data || !data.request) return;
+  switch (data.request){
+    case 'Get':
+      const projects = await getProjects();
+      console.log(projects);
+      return projects;
+  }
+});
+
+async function getProjects(){
+  const sqlStatement = `SELECT * FROM projects`;
+  const params = [];
+  const result = databaseHandler('all', sqlStatement, params);
   return result;
 }

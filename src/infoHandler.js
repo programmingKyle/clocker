@@ -21,5 +21,6 @@ async function getAllActiveSubtopics(){
 }
 
 async function getAllActiveProjects(){
-    //activeProjects = await api.projectHandler({request: 'Get', status: 'active'});
+    activeProjects = await api.projectHandler({request: 'Get'});
+    console.log(activeProjects);
 }
