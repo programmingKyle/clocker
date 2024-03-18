@@ -40,8 +40,11 @@ db.run(`
 db.run(`
   CREATE TABLE IF NOT EXISTS projects (
     id INTEGER PRIMARY KEY,
-    project TEXT UNIQUE,
-    previousTime TIMESTAMP
+    topicID INTEGER,
+    subtopicID INTEGER,
+    project TEXT,
+    previousTime TIMESTAMP,
+    UNIQUE(topicID, subtopicID, project)
   )
 `);
 
@@ -265,8 +268,8 @@ ipcMain.handle('log-time-handler', async (req, data) => {
   const params = [data.topicID, data.subtopicID, data.project, data.time];
   const result = databaseHandler('run', sqlStatement, params);
 
-  const addTopic = await addProject(data.project);
-  if (addTopic === 'duplicate'){
+  const addProjectResult = await addProject(data.topicID, data.subtopicID, data.project);
+  if (addProjectResult === 'duplicate'){
     updateProjectPreviousClock(data.project);
   }
 
@@ -357,9 +360,9 @@ async function calculateTotalTime(entries) {
   return totalTime.toFixed(1);
 }
 
-async function addProject(name){
-  const sqlStatement = `INSERT INTO projects (project, previousTime) VALUES (?, CURRENT_TIMESTAMP)`;
-  const params = [name];
+async function addProject(topic, subtopic, name){
+  const sqlStatement = `INSERT INTO projects (topicID, subtopicID, project, previousTime) VALUES (?, ?, ?, CURRENT_TIMESTAMP)`;
+  const params = [topic, subtopic, name];
   const result = databaseHandler('run', sqlStatement, params);
   return result;
 }
@@ -369,7 +372,6 @@ ipcMain.handle('project-handler', async (req, data) => {
   switch (data.request){
     case 'Get':
       const projects = await getProjects();
-      console.log(projects);
       return projects;
   }
 });

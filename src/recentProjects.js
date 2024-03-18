@@ -1,6 +1,7 @@
 const projectListDiv_el = document.getElementById('projectListDiv');
 
 function populateRecentProjects(){
+    console.log(activeTopics);
     console.log(activeProjects);
 
     activeProjects.forEach(element => {
