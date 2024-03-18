@@ -3,10 +3,12 @@
 
 let activeTopics;
 let activeSubtopics;
+let activeProjects;
 
 document.addEventListener('DOMContentLoaded', async () => {
     await getAllActiveSubtopics();
     await getAllActiveTopics();
+    await getAllActiveProjects();
 });
 
 async function getAllActiveTopics(){
@@ -16,4 +18,8 @@ async function getAllActiveTopics(){
 
 async function getAllActiveSubtopics(){
     activeSubtopics = await api.subtopicHandler({request: 'Get', status: 'active'});
+}
+
+async function getAllActiveProjects(){
+    //activeProjects = await api.projectHandler({request: 'Get', status: 'active'});
 }
