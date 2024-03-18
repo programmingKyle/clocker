@@ -50,6 +50,7 @@ async function stopTimer(){
     clearInterval(timerInterval);
     logTimeHandler(formatLogTime);
     populateQuickTimes();
+    getAllActiveProjects();
     toggleInputsDiv();
 }
 
