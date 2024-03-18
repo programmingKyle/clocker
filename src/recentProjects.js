@@ -2,7 +2,6 @@ const projectListDiv_el = document.getElementById('projectListDiv');
 
 function populateRecentProjects(){
     console.log(activeTopics);
-    console.log(activeProjects);
 
     activeProjects.forEach(element => {
         const projectItem_el = document.createElement('div');
@@ -15,13 +14,26 @@ function populateRecentProjects(){
         projectTimeText_el.textContent = 'NA YET';
 
         const projectTopicText_el = document.createElement('h5');
-        projectTopicText_el.textContent = 'NA YET';
+        const topicName = findTopicById(element.topicID);
+        projectTopicText_el.textContent = topicName;
+        
 
         const projectSubtopicText_el = document.createElement('h5');
-        projectSubtopicText_el.textContent = 'NA YET';
+        const subtopicName = findSubtopicById(element.subtopicID);
+        projectSubtopicText_el.textContent = subtopicName;
 
         projectItem_el.append(projectName_el, projectTimeText_el, projectTopicText_el, projectSubtopicText_el);
 
         projectListDiv_el.append(projectItem_el);
     });
+}
+
+function findTopicById(id) {
+    const foundObject = activeTopics.find(obj => obj.id === id);
+    return foundObject ? foundObject.topic : null;
+}
+
+function findSubtopicById(id) {
+    const foundObject = activeSubtopics.find(obj => obj.id === id);
+    return foundObject ? foundObject.subtopic : null;
 }
