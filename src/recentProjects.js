@@ -21,7 +21,6 @@ async function populateRecentProjects(){
         const projectTopicText_el = document.createElement('h5');
         const topicName = findTopicById(element.topicID);
         projectTopicText_el.textContent = topicName;
-        
 
         const projectSubtopicText_el = document.createElement('h5');
         const subtopicName = findSubtopicById(element.subtopicID);
@@ -30,7 +29,19 @@ async function populateRecentProjects(){
         projectItem_el.append(projectName_el, projectTimeText_el, projectTopicText_el, projectSubtopicText_el);
 
         projectListDiv_el.append(projectItem_el);
+
+        projectEventListener(projectItem_el, element.topicID, element.subtopicID, element.project);
     }
+}
+
+function projectEventListener(div, topicID, subtopicID, project){
+    div.addEventListener('click', () => {
+        console.log(subtopicSelect_el);
+        topicSelect_el.value = topicID;
+        subtopicSelect_el.value = subtopicID;
+        projectInput_el.value = project;
+        console.log(topicID, subtopicID, project);
+    });
 }
 
 function findTopicById(id) {
