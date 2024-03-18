@@ -1,9 +1,8 @@
 const projectListDiv_el = document.getElementById('projectListDiv');
 
-function populateRecentProjects(){
-    console.log(activeTopics);
+async function populateRecentProjects(){
 
-    activeProjects.forEach(element => {
+    for (const element of activeProjects){
         const projectItem_el = document.createElement('div');
         projectItem_el.classList.add('project-item-div');
 
@@ -11,7 +10,8 @@ function populateRecentProjects(){
         projectName_el.textContent = element.project;
 
         const projectTimeText_el = document.createElement('p');
-        projectTimeText_el.textContent = 'NA YET';
+        const projectTime = await api.quickTimesHandler({request: 'Project', topicID: element.topicID, subtopicID: element.subtopicID, project: element.project})
+        projectTimeText_el.textContent = projectTime;
 
         const projectTopicText_el = document.createElement('h5');
         const topicName = findTopicById(element.topicID);
@@ -25,7 +25,7 @@ function populateRecentProjects(){
         projectItem_el.append(projectName_el, projectTimeText_el, projectTopicText_el, projectSubtopicText_el);
 
         projectListDiv_el.append(projectItem_el);
-    });
+    }
 }
 
 function findTopicById(id) {

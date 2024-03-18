@@ -311,6 +311,9 @@ ipcMain.handle('quick-times-handler', async (req, data) => {
     case 'Specific':
       times = await getSpecificTimes(data.timeFrame);
       break;
+    case 'Project':
+      times = await getProjectTime(data.topicID, data.subtopicID, data.project);
+      break;
   }
   if (times){
     const calcTime = await calculateTotalTime(times);
@@ -328,16 +331,19 @@ async function getAllQuickTimes(){
 }
 
 async function getSpecificTimes(dayCount) {
-  // Calculate the start date based on the dayCount
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - (dayCount - 1));
   const formattedStartDate = startDate.toISOString().split('T')[0];
 
-  // Construct the SQL statement to fetch entries within the specified timeframe
   const sqlStatement = `SELECT * FROM clock WHERE date >= ?`;
   const params = [formattedStartDate];
-  
-  // Execute the query
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
+async function getProjectTime(topic, subtopic, project) {
+  const sqlStatement = `SELECT * FROM clock WHERE topicID = ? AND subtopicID = ? AND project = ?`;
+  const params = [topic, subtopic, project];
   const result = await databaseHandler('all', sqlStatement, params);
   return result;
 }
