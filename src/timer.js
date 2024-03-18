@@ -48,9 +48,9 @@ async function stopTimer(){
     const logTime = logStopTime - logStartTime;
     const formatLogTime = formatTime(logTime);
     clearInterval(timerInterval);
-    logTimeHandler(formatLogTime);
-    populateQuickTimes();
-    getAllActiveProjects();
+    await logTimeHandler(formatLogTime);
+    await populateQuickTimes();
+    await getAllActiveProjects();
     toggleInputsDiv();
 }
 
