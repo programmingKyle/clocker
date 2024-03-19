@@ -314,6 +314,9 @@ ipcMain.handle('quick-times-handler', async (req, data) => {
     case 'Project':
       times = await getProjectTime(data.topicID, data.subtopicID, data.project);
       break;
+    case 'Topic':
+      times = await getTopicTime(data.topicID);
+      break;
   }
   if (times){
     const calcTime = await calculateTotalTime(times);
@@ -344,6 +347,14 @@ async function getSpecificTimes(dayCount) {
 async function getProjectTime(topic, subtopic, project) {
   const sqlStatement = `SELECT * FROM clock WHERE topicID = ? AND subtopicID = ? AND project = ?`;
   const params = [topic, subtopic, project];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
+async function getTopicTime(topic){
+  console.log(topic);
+  const sqlStatement = `SELECT * FROM clock WHERE topicID = ?`;
+  const params = [topic];
   const result = await databaseHandler('all', sqlStatement, params);
   return result;
 }
