@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function getAllActiveTopics(){
     activeTopics = await api.topicHandler({request: 'Get', status: 'active'});
     await populateTopicSelect();
+    await populateTopicView();
 }
 
 async function getAllActiveSubtopics(){
