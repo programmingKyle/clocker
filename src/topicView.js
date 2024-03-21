@@ -1,6 +1,7 @@
 const topicListDiv_el = document.getElementById('topicListDiv');
 
 async function populateTopicView(){
+    topicListDiv_el.innerHTML = '';
     for (const element of activeTopics){
         const topicItemDiv_el = document.createElement('div');
         topicItemDiv_el.classList.add('topic-item-div');

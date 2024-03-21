@@ -178,12 +178,8 @@ function databaseHandler(request, query, params) {
         db.run(query, params, (err) => {
           if (err) {
               if (err.message.includes('UNIQUE constraint failed')) {
-                  // Handle unique constraint violation error
-                  console.error('Error: Duplicate entry');
                   resolve('duplicate');
               } else {
-                  // Handle other errors
-                  console.error('Error:', err.message);
                   resolve(false); // Or reject(err) if you want to propagate the error
               }
           } else {
@@ -352,7 +348,6 @@ async function getProjectTime(topic, subtopic, project) {
 }
 
 async function getTopicTime(topic){
-  console.log(topic);
   const sqlStatement = `SELECT * FROM clock WHERE topicID = ?`;
   const params = [topic];
   const result = await databaseHandler('all', sqlStatement, params);

@@ -51,6 +51,7 @@ async function stopTimer(){
     await logTimeHandler(formatLogTime);
     await populateQuickTimes();
     await getAllActiveProjects();
+    await populateTopicView();
     toggleInputsDiv();
 }
 
