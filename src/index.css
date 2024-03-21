@@ -329,3 +329,19 @@ h1,h2,h3,h4,h5,h6 {
   color: white;
   font-weight: 400;
 }
+
+.button-header-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.button-header-container .slim-button {
+  position: absolute;
+  margin-top: 3px;
+}
+
+.button-header-container h3 {
+  text-align: center;
+  flex: 1;
+}
