@@ -20,7 +20,7 @@ async function populateTopicView(){
         topicItemDiv_el.append(topicName_el, topicTime_el);
 
         topicItemDiv_el.addEventListener('click', async () => {
-            await populateSubtopics(element.topic);
+            await populateSubtopics(element.id, element.topic);
         })
     }
 }
