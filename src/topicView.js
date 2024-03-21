@@ -1,6 +1,8 @@
 const topicListDiv_el = document.getElementById('topicListDiv');
+const topicSubtopicHeader_el = document.getElementById('topicSubtopicHeader');
 
 async function populateTopicView(){
+    topicSubtopicHeader_el.textContent = 'Topics';
     topicListDiv_el.innerHTML = '';
     for (const element of activeTopics){
         const topicItemDiv_el = document.createElement('div');
@@ -16,5 +18,9 @@ async function populateTopicView(){
 
         topicListDiv_el.append(topicItemDiv_el);
         topicItemDiv_el.append(topicName_el, topicTime_el);
+
+        topicItemDiv_el.addEventListener('click', async () => {
+            await populateSubtopics(element.topic);
+        })
     }
 }
