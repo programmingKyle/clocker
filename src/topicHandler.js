@@ -49,6 +49,10 @@ function editSubjectListeners(element, subject){
 
     confirmEditSubjectButton_el.addEventListener('click', async () => {
         await api.topicHandler({request: 'Edit', topicID: element.id, newName: editSubjectInput_el.value});
+        editSubjectInput_el.value = '';
+        await getAllActiveTopics();
+        await getAllActiveProjects();
+        overlayContainer_el.style.display = 'none';
     });
 }
 
