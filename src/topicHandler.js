@@ -32,9 +32,7 @@ function addTopicListeners(){
     });
 }
 
-function editTopicListeners(element, subject){
-    console.log(element, subject);
-    const editSubjectContainer_el = document.getElementById('editSubjectContainer');
+function editSubjectListeners(element, subject){
     const editSubjectTitleText_el = document.getElementById('editSubjectTitleText');
     const editSubjectCloseButton_el = document.getElementById('editSubjectCloseButton');
     const editSubjectInput_el = document.getElementById('editSubjectInput');
@@ -42,6 +40,12 @@ function editTopicListeners(element, subject){
 
     editSubjectTitleText_el.textContent = `Edit ${subject}`;
     editSubjectInput_el.placeholder = `Enter your ${subject}`;
+
+    editSubjectCloseButton_el.addEventListener('click', () => {
+        currentItem = null;
+        selectedSubject = '';
+        overlayContainer_el.style.display = 'none';
+    });
 }
 
 function capitalizeFirstLetter(word) {
