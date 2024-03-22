@@ -39,12 +39,16 @@ function editSubjectListeners(element, subject){
     const confirmEditSubjectButton_el = document.getElementById('confirmEditSubjectButton');
 
     editSubjectTitleText_el.textContent = `Edit ${subject}`;
-    editSubjectInput_el.placeholder = `Enter your ${subject}`;
+    editSubjectInput_el.value = element.topic;
 
     editSubjectCloseButton_el.addEventListener('click', () => {
         currentItem = null;
         selectedSubject = '';
         overlayContainer_el.style.display = 'none';
+    });
+
+    confirmEditSubjectButton_el.addEventListener('click', async () => {
+        await api.topicHandler({request: 'Edit', topicID: element.id, newName: editSubjectInput_el.value});
     });
 }
 

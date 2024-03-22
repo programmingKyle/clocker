@@ -212,6 +212,9 @@ ipcMain.handle('topic-handler', async (req, data) => {
     case 'Get':
       result = await getTopicsFromDatabase(data.status);
       break;
+    case 'Edit':
+      result = await editTopic(data.topicID, data.newName);
+      break;
   }
   return result;
 });
@@ -227,6 +230,13 @@ async function getTopicsFromDatabase(status){
   const sqlStatement = `SELECT * FROM topics WHERE status = ?`;
   const params = [status];
   const result = databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
+async function editTopic(topicID, newName){
+  const sqlStatement = `UPDATE topics SET topic = ? WHERE id = ?`;
+  const params = [newName, topicID];
+  const result = databaseHandler('run', sqlStatement, params);
   return result;
 }
 
