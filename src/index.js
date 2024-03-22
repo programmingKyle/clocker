@@ -250,6 +250,9 @@ ipcMain.handle('subtopic-handler', async (req, data) => {
     case 'Get':
       result = await getSubtopics(data.status);
       break;
+    case 'Edit':
+      result = await editSubtopic(data.subtopicID, data.newName);
+      break;
   }
   return result;
 });
@@ -265,6 +268,13 @@ async function getSubtopics(status){
   const sqlStatement = `SELECT * FROM subtopics WHERE status = ?`;
   const params = [status];
   const result = databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
+async function editSubtopic(subtopicID, newName){
+  const sqlStatement = `UPDATE subtopics SET subtopic = ? WHERE id = ?`;
+  const params = [newName, subtopicID];
+  const result = databaseHandler('run', sqlStatement, params);
   return result;
 }
 

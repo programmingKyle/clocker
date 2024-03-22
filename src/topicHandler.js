@@ -32,6 +32,7 @@ function addTopicListeners(){
     });
 }
 
+// Used for both topics and subtopics
 function editSubjectListeners(element, subject){
     const editSubjectTitleText_el = document.getElementById('editSubjectTitleText');
     const editSubjectCloseButton_el = document.getElementById('editSubjectCloseButton');
@@ -39,7 +40,7 @@ function editSubjectListeners(element, subject){
     const confirmEditSubjectButton_el = document.getElementById('confirmEditSubjectButton');
 
     editSubjectTitleText_el.textContent = `Edit ${subject}`;
-    editSubjectInput_el.value = element.topic;
+    editSubjectInput_el.value = subject === 'Topic' ? element.topic : element.subtopic;
 
     editSubjectCloseButton_el.addEventListener('click', () => {
         currentItem = null;
@@ -48,7 +49,13 @@ function editSubjectListeners(element, subject){
     });
 
     confirmEditSubjectButton_el.addEventListener('click', async () => {
-        await api.topicHandler({request: 'Edit', topicID: element.id, newName: editSubjectInput_el.value});
+        if (subject === 'Topic'){
+            await api.topicHandler({request: 'Edit', topicID: element.id, newName: editSubjectInput_el.value});
+            await getAllActiveTopics();
+        } else if (subject === 'Subtopic'){
+            await api.subtopicHandler({request: 'Edit', subtopicID: element.id, newName: editSubjectInput_el.value});
+            await getAllActiveSubtopics();
+        }
         editSubjectInput_el.value = '';
         await getAllActiveTopics();
         await getAllActiveProjects();

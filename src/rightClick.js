@@ -1,5 +1,5 @@
 const rightClickMenu_el = document.getElementById('rightClickMenu');
-const rightClickStatusButton_el = document.getElementById('rightClickStatusButton');
+//const rightClickStatusButton_el = document.getElementById('rightClickStatusButton');
 const rightClickEditButton_el = document.getElementById('rightClickEditButton');
 const rightClickDeleteButton_el = document.getElementById('rightClickDeleteButton');
 
@@ -7,6 +7,7 @@ let currentItem;
 let selectedSubject; // This will return either Topic or Subject
 
 function rightClickMenuToggle(item, event, subject){
+    console.log(item);
     currentItem = item;
     selectedSubject = subject;
     menuDisplay(event);
@@ -42,9 +43,11 @@ document.addEventListener('click', () => {
     rightClickMenu_el.style.display = 'none';
 });
 
+/*
 rightClickStatusButton_el.addEventListener('click', () => {
     console.log('Edit Status');
 });
+*/
 
 rightClickEditButton_el.addEventListener('click', () => {
     console.log('Edit Name');
