@@ -21,6 +21,12 @@ async function populateTopicView(){
 
         topicItemDiv_el.addEventListener('click', async () => {
             await populateSubtopics(element.id, element.topic);
-        })
+        });
+
+        topicItemDiv_el.addEventListener('contextmenu', (event) => {
+            if (event.button === 2){
+                rightClickMenuToggle(element, event);
+            }
+        });
     }
 }

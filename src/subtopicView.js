@@ -13,7 +13,6 @@ async function populateSubtopics(topicID, topic){
     noSubtopicText_el.textContent = 'No Subtopic';
 
     const time = await api.quickTimesHandler({request: 'Subtopic', topicID, subtopicID: 'null'});
-    console.log(time);
 
     const noSubtopicTimeText_el = document.createElement('h3');
     noSubtopicTimeText_el.textContent = time;

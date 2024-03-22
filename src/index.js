@@ -314,7 +314,6 @@ ipcMain.handle('quick-times-handler', async (req, data) => {
       times = await getTopicTime(data.topicID);
       break;
     case 'Subtopic':
-      console.log(data.subtopicID);
       times = await getSubtopicTime(data.topicID, data.subtopicID);
       break;
   }
