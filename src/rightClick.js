@@ -3,8 +3,13 @@ const rightClickStatusButton_el = document.getElementById('rightClickStatusButto
 const rightClickEditButton_el = document.getElementById('rightClickEditButton');
 const rightClickDeleteButton_el = document.getElementById('rightClickDeleteButton');
 
-function rightClickMenuToggle(item, event){
+let currentItem;
+let selectedSubject; // This will return either Topic or Subject
+
+function rightClickMenuToggle(item, event, subject){
     console.log(item);
+    currentItem = item;
+    selectedSubject = subject;
     menuDisplay(event);
 }
 
@@ -36,4 +41,20 @@ function menuDisplay(e) {
 
 document.addEventListener('click', () => {
     rightClickMenu_el.style.display = 'none';
+});
+
+rightClickStatusButton_el.addEventListener('click', () => {
+    console.log('Edit Status');
+});
+
+rightClickEditButton_el.addEventListener('click', () => {
+    console.log('Edit Name');
+    overlayContainer_el.style.display = 'flex';
+    loadOverlayContent('overlays.html', '#editSubjectContainer', () => {
+        editTopicListeners(currentItem, selectedSubject);
+    });
+});
+
+rightClickDeleteButton_el.addEventListener('click', () => {
+    console.log('Delete');
 });

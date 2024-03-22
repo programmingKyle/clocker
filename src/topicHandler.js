@@ -32,6 +32,18 @@ function addTopicListeners(){
     });
 }
 
+function editTopicListeners(element, subject){
+    console.log(element, subject);
+    const editSubjectContainer_el = document.getElementById('editSubjectContainer');
+    const editSubjectTitleText_el = document.getElementById('editSubjectTitleText');
+    const editSubjectCloseButton_el = document.getElementById('editSubjectCloseButton');
+    const editSubjectInput_el = document.getElementById('editSubjectInput');
+    const confirmEditSubjectButton_el = document.getElementById('confirmEditSubjectButton');
+
+    editSubjectTitleText_el.textContent = `Edit ${subject}`;
+    editSubjectInput_el.placeholder = `Enter your ${subject}`;
+}
+
 function capitalizeFirstLetter(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }

@@ -25,7 +25,7 @@ async function populateTopicView(){
 
         topicItemDiv_el.addEventListener('contextmenu', (event) => {
             if (event.button === 2){
-                rightClickMenuToggle(element, event);
+                rightClickMenuToggle(element, event, 'Topic');
             }
         });
     }
