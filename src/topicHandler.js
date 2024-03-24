@@ -64,7 +64,35 @@ function editSubjectListeners(element, subject){
 }
 
 function deleteSubjectListeners(element, subject){
-    console.log(element, subject);
+    const deleteSubjectTitleText_el = document.getElementById('deleteSubjectTitleText');
+    const deleteSubjectCloseButton_el = document.getElementById('deleteSubjectCloseButton');
+    const deleteSubjectInput_el = document.getElementById('deleteSubjectInput');
+    const confirmDeleteSubjectButton_el = document.getElementById('confirmDeleteSubjectButton');
+
+    deleteSubjectTitleText_el.textContent = `Edit ${subject}`;
+
+    deleteSubjectCloseButton_el.addEventListener('click', () => {
+        currentItem = null;
+        selectedSubject = '';
+        overlayContainer_el.style.display = 'none';
+    });
+
+    confirmDeleteSubjectButton_el.addEventListener('click', async () => {
+        if (deleteSubjectInput_el.value === 'DELETE'){
+            if (subject === 'Topic'){
+                //await api.topicHandler({request: 'Edit', topicID: element.id, newName: editSubjectInput_el.value});
+            } else if (subject === 'Subtopic'){
+                //await api.subtopicHandler({request: 'Edit', subtopicID: element.id, newName: editSubjectInput_el.value});
+            }
+            confirmDeleteSubjectButton_el.value = '';
+            await getAllActiveTopics();
+            await getAllActiveProjects();
+            overlayContainer_el.style.display = 'none';    
+        } else {
+            deleteSubjectInput_el.classList.add('error');
+            errorTimeout(deleteSubjectInput_el);
+        }
+    });
 }
 
 function capitalizeFirstLetter(word) {

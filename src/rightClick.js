@@ -7,7 +7,6 @@ let currentItem;
 let selectedSubject; // This will return either Topic or Subject
 
 function rightClickMenuToggle(item, event, subject){
-    console.log(item);
     currentItem = item;
     selectedSubject = subject;
     menuDisplay(event);
@@ -50,7 +49,6 @@ rightClickStatusButton_el.addEventListener('click', () => {
 */
 
 rightClickEditButton_el.addEventListener('click', () => {
-    console.log('Edit Name');
     rightClickMenu_el.style.display = 'none';
     overlayContainer_el.style.display = 'flex';
     loadOverlayContent('overlays.html', '#editSubjectContainer', () => {
@@ -59,7 +57,6 @@ rightClickEditButton_el.addEventListener('click', () => {
 });
 
 rightClickDeleteButton_el.addEventListener('click', () => {
-    console.log('Delete');
     rightClickMenu_el.style.display = 'none';
     overlayContainer_el.style.display = 'flex';
     loadOverlayContent('overlays.html', '#deleteSubjectContainer', () => {
