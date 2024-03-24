@@ -304,7 +304,6 @@ async function editSubtopic(subtopicID, newName){
 }
 
 async function deleteSubtopic(subtopicID){
-  console.log(subtopicID);
   let deleteResult;
   const params = [subtopicID];
   const subtopicSubSql = `DELETE FROM subtopics WHERE id = ?`;
