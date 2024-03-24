@@ -1,6 +1,8 @@
 const topicListDiv_el = document.getElementById('topicListDiv');
 const topicSubtopicHeader_el = document.getElementById('topicSubtopicHeader');
 
+let currentSelectedTopic;
+
 async function populateTopicView(){
     topicSubtopicHeader_el.textContent = 'Topics';
     topicListDiv_el.innerHTML = '';
@@ -20,6 +22,7 @@ async function populateTopicView(){
         topicItemDiv_el.append(topicName_el, topicTime_el);
 
         topicItemDiv_el.addEventListener('click', async () => {
+            currentSelectedTopic = ({id: element.id, topic: element.topic});
             await populateSubtopics(element.id, element.topic);
         });
 

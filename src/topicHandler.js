@@ -55,9 +55,9 @@ function editSubjectListeners(element, subject){
         } else if (subject === 'Subtopic'){
             await api.subtopicHandler({request: 'Edit', subtopicID: element.id, newName: editSubjectInput_el.value});
             await getAllActiveSubtopics();
+            await populateSubtopics(currentSelectedTopic.id, currentSelectedTopic.topic);
         }
         editSubjectInput_el.value = '';
-        await getAllActiveTopics();
         await getAllActiveProjects();
         overlayContainer_el.style.display = 'none';
     });
