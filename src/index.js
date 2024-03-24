@@ -275,6 +275,9 @@ ipcMain.handle('subtopic-handler', async (req, data) => {
     case 'Edit':
       result = await editSubtopic(data.subtopicID, data.newName);
       break;
+    case 'Delete':
+      result = await deleteSubtopic(data.subtopicID);
+      break;
   }
   return result;
 });
@@ -299,6 +302,23 @@ async function editSubtopic(subtopicID, newName){
   const result = databaseHandler('run', sqlStatement, params);
   return result;
 }
+
+async function deleteSubtopic(subtopicID){
+  console.log(subtopicID);
+  let deleteResult;
+  const params = [subtopicID];
+  const subtopicSubSql = `DELETE FROM subtopics WHERE id = ?`;
+  deleteResult = databaseHandler('run', subtopicSubSql, params);
+
+  const subtopicProjSql = `DELETE FROM projects WHERE subtopicID = ?`;
+  deleteResult = databaseHandler('run', subtopicProjSql, params);
+
+  const subtopicClockSql = `DELETE FROM clock WHERE subtopicID = ?`
+  deleteResult = databaseHandler('run', subtopicClockSql, params);
+
+  return deleteResult;
+}
+
 
 ipcMain.handle('log-time-handler', async (req, data) => {
   if (!data) return;

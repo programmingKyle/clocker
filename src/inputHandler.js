@@ -34,7 +34,6 @@ topicSelect_el.addEventListener('change', async () => {
 });
 
 async function populateSubtopicSelect(topic){
-    console.log(topic);
     subtopicSelect_el.innerHTML = '';
 
     activeSubtopics.sort((a, b) => {
