@@ -215,6 +215,9 @@ ipcMain.handle('topic-handler', async (req, data) => {
     case 'Edit':
       result = await editTopic(data.topicID, data.newName);
       break;
+    case 'Delete':
+      result = await deleteTopic(data.topicID);
+      break;
   }
   return result;
 });
@@ -238,6 +241,14 @@ async function editTopic(topicID, newName){
   const params = [newName, topicID];
   const result = databaseHandler('run', sqlStatement, params);
   return result;
+}
+
+async function deleteTopic(topicID){
+  const sqlStatement = `DELETE FROM topics WHERE id = ?`;
+  const params = [topicID];
+  const result = databaseHandler('run', sqlStatement, params);
+  return result;
+
 }
 
 ipcMain.handle('subtopic-handler', async (req, data) => {

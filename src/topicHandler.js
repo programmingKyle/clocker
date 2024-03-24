@@ -80,7 +80,7 @@ function deleteSubjectListeners(element, subject){
     confirmDeleteSubjectButton_el.addEventListener('click', async () => {
         if (deleteSubjectInput_el.value === 'DELETE'){
             if (subject === 'Topic'){
-                //await api.topicHandler({request: 'Edit', topicID: element.id, newName: editSubjectInput_el.value});
+                await api.topicHandler({request: 'Delete', topicID: element.id});
             } else if (subject === 'Subtopic'){
                 //await api.subtopicHandler({request: 'Edit', subtopicID: element.id, newName: editSubjectInput_el.value});
             }
