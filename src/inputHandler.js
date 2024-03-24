@@ -25,6 +25,7 @@ async function populateTopicSelect(){
         await populateSubtopicSelect(topicSelect_el.value);
     } else {
         addSubtopicButton_el.style.visibility = 'hidden';
+        subtopicSelect_el.value = '';
     }
 }
 
@@ -33,6 +34,7 @@ topicSelect_el.addEventListener('change', async () => {
 });
 
 async function populateSubtopicSelect(topic){
+    console.log(topic);
     subtopicSelect_el.innerHTML = '';
 
     activeSubtopics.sort((a, b) => {

@@ -244,11 +244,22 @@ async function editTopic(topicID, newName){
 }
 
 async function deleteTopic(topicID){
-  const sqlStatement = `DELETE FROM topics WHERE id = ?`;
-  const params = [topicID];
-  const result = databaseHandler('run', sqlStatement, params);
-  return result;
+  let deleteResult;
 
+  const topicDeleteSql = `DELETE FROM topics WHERE id = ?`;
+  const params = [topicID];
+  deleteResult = databaseHandler('run', topicDeleteSql, params);
+
+  const topicSubSql = `DELETE FROM subtopics WHERE topicID = ?`;
+  deleteResult = databaseHandler('run', topicSubSql, params);
+
+  const topicProjSql = `DELETE FROM projects WHERE topicID = ?`;
+  deleteResult = databaseHandler('run', topicProjSql, params);
+
+  const topicClockSql = `DELETE FROM projects WHERE topicID = ?`
+  deleteResult = databaseHandler('run', topicClockSql, params);
+
+  return deleteResult;
 }
 
 ipcMain.handle('subtopic-handler', async (req, data) => {
