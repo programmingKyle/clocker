@@ -51,5 +51,6 @@ async function populateSubtopics(topicID, topic) {
 }
 
 subtopicViewBackButton_el.addEventListener('click', async () => {
+    currentSelectedTopic = null;
     await populateTopicView();
 });

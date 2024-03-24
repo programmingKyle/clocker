@@ -63,6 +63,10 @@ function editSubjectListeners(element, subject){
     });
 }
 
+function deleteSubjectListeners(element, subject){
+    console.log(element, subject);
+}
+
 function capitalizeFirstLetter(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }

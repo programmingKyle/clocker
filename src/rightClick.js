@@ -60,4 +60,9 @@ rightClickEditButton_el.addEventListener('click', () => {
 
 rightClickDeleteButton_el.addEventListener('click', () => {
     console.log('Delete');
+    rightClickMenu_el.style.display = 'none';
+    overlayContainer_el.style.display = 'flex';
+    loadOverlayContent('overlays.html', '#deleteSubjectContainer', () => {
+        deleteSubjectListeners(currentItem, selectedSubject);
+    });
 });
