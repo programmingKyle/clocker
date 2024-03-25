@@ -20,5 +20,17 @@ async function populateProjects(subtopicID, label){
 
         topicListDiv_el.append(projectItemDiv_el);
         projectItemDiv_el.append(projectNameText_el, projectTime_el);
+
+        // Add event listener using a closure to capture the current value of 'element'
+        projectItemDiv_el.addEventListener('click', async () => {
+            console.log('You clicked the project!');
+        });
+
+        projectItemDiv_el.addEventListener('contextmenu', (event) => {
+            if (event.button === 2){
+                rightClickMenuToggle(element, event, 'Project');
+            }
+        })
+
     });
 }
