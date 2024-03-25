@@ -96,6 +96,7 @@ function deleteSubjectListeners(element, subject){
         if (deleteSubjectInput_el.value === 'DELETE'){
             if (subject === 'Topic'){
                 await api.topicHandler({request: 'Delete', topicID: element.id});
+                subtopicSelect_el.innerHTML = '';
             } else if (subject === 'Subtopic'){
                 await api.subtopicHandler({request: 'Delete', subtopicID: element.id});
             } else if (subject === 'Project'){
@@ -103,9 +104,9 @@ function deleteSubjectListeners(element, subject){
             }
             confirmDeleteSubjectButton_el.value = '';
             await getAllActiveTopics();
+            await getAllActiveSubtopics();
             await getAllActiveProjects();
             overlayContainer_el.style.display = 'none';
-            
             projectInput_el.value = '';
         } else {
             deleteSubjectInput_el.classList.add('error');
