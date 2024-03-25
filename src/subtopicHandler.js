@@ -1,3 +1,5 @@
+let currentSelectedSubtopic;
+
 const addSubtopicButton_el = document.getElementById('addSubtopicButton');
 
 addSubtopicButton_el.addEventListener('click', () => {

@@ -41,6 +41,7 @@ async function populateSubtopics(topicID, topic) {
         // Add event listener using a closure to capture the current value of 'element'
         subtopicItemDiv_el.addEventListener('click', async () => {
             subjectViewLocation = 2;
+            currentSelectedSubtopic = element.id;
             await populateProjects(element.id, 'Projects');
         });
 

@@ -69,7 +69,8 @@ function editSubjectListeners(element, subject){
             await populateSubtopics(currentSelectedTopic.id, currentSelectedTopic.topic);
         } else if (subject === 'Project') {
             await api.projectHandler({request: 'Edit', projectID: element.id, newName: editSubjectInput_el.value});
-            console.log('Time to edit the project');
+            await getAllActiveProjects();
+            await populateProjects(currentSelectedSubtopic, 'Projects');
         }
         editSubjectInput_el.value = '';
         await getAllActiveProjects();
