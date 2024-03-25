@@ -13,7 +13,7 @@ async function populateProjects(subtopicID, label){
         const projectNameText_el = document.createElement('h3');
         projectNameText_el.textContent = element.project;
 
-        const time = '1.5';
+        const time = await api.quickTimesHandler({request: 'Project', topicID: element.topicID, subtopicID: subtopicID, project: element.project})
         
         const projectTime_el = document.createElement('h3');
         projectTime_el.textContent = time;
