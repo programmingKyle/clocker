@@ -24,6 +24,7 @@ async function populateTopicView(){
         topicItemDiv_el.addEventListener('click', async () => {
             currentSelectedTopic = ({id: element.id, topic: element.topic});
             await populateSubtopics(element.id, element.topic);
+            await populateSpecificQuickTimes('topic', element.id);
         });
 
         topicItemDiv_el.addEventListener('contextmenu', (event) => {

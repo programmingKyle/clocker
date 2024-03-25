@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('api', {
     logTimeHandler: (data) => ipcRenderer.invoke('log-time-handler', data),
     quickTimesHandler: (data) => ipcRenderer.invoke('quick-times-handler', data),
     projectHandler: (data) => ipcRenderer.invoke('project-handler', data),
+    specificQuickTimes: (data) => ipcRenderer.invoke('specific-quick-times', data),
 });
 
 contextBridge.exposeInMainWorld('autoUpdater', {

@@ -466,3 +466,30 @@ async function getProjects(){
   const result = databaseHandler('all', sqlStatement, params);
   return result;
 }
+
+ipcMain.handle('specific-quick-times', async (req, data) => {
+  if (!data || !data.request) return;
+  let times;
+  switch (data.request){
+    case 'Total':
+      times = await getSpecificQTTotal(data.subject, data.id);
+      break;
+    case 'Time':
+      //times = await getSpecificQTTime(data.timeFrame);
+      break;
+  }
+  if (times){
+    const calcTime = await calculateTotalTime(times);
+    return calcTime;  
+  } else {
+    return;
+  }
+});
+
+async function getSpecificQTTotal(subject, id){
+  const sqlStatement = `SELECT * FROM clock WHERE ${subject+'ID'} = ?`;
+  console.log(sqlStatement);
+  const params = [id];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}

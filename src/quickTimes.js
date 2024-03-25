@@ -14,3 +14,11 @@ async function populateQuickTimes(){
     totalWeeklyText_el.textContent = await api.quickTimesHandler({request: 'Specific', timeFrame: 7});
     totalTodayText_el.textContent = await api.quickTimesHandler({request: 'Specific', timeFrame: 1});
 }
+
+// Subject input is used for topics or subtopics
+async function populateSpecificQuickTimes(subject, id){
+    console.log(id);
+    console.log(subject);
+    const val = await api.specificQuickTimes({request: 'Total', subject, id});
+    console.log(val);
+}
