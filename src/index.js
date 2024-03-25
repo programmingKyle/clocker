@@ -474,8 +474,8 @@ ipcMain.handle('specific-quick-times', async (req, data) => {
     case 'Total':
       times = await getSpecificQTTotal(data.subject, data.id);
       break;
-    case 'Time':
-      //times = await getSpecificQTTime(data.timeFrame);
+    case 'Specific':
+      times = await getSpecificQTTime(data.subject, data.id, data.timeFrame);
       break;
   }
   if (times){
@@ -488,8 +488,19 @@ ipcMain.handle('specific-quick-times', async (req, data) => {
 
 async function getSpecificQTTotal(subject, id){
   const sqlStatement = `SELECT * FROM clock WHERE ${subject+'ID'} = ?`;
-  console.log(sqlStatement);
   const params = [id];
   const result = await databaseHandler('all', sqlStatement, params);
   return result;
 }
+
+async function getSpecificQTTime(subject, id, dayCount){
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - (dayCount - 1));
+  const formattedStartDate = startDate.toISOString().split('T')[0];
+
+  const sqlStatement = `SELECT * FROM clock WHERE ${subject+'ID'} = ? AND date >= ?`;
+  const params = [id, formattedStartDate];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
