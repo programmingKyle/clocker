@@ -459,6 +459,11 @@ ipcMain.handle('project-handler', async (req, data) => {
       return projects;
     case 'Edit':
       await editProject(data.projectID, data.newName);
+      break;
+    case 'Delete':
+      console.log('Delete');
+      await deleteProject(data.topicID, data.subtopicID, data.projectName);
+      break;
   }
 });
 
@@ -467,6 +472,19 @@ async function getProjects(){
   const params = [];
   const result = databaseHandler('all', sqlStatement, params);
   return result;
+}
+
+async function deleteProject(topicID, subtopicID, projectName){
+  console.log(topicID, subtopicID, projectName);
+  const clockSqlStatement = `DELETE FROM clock WHERE topicID = ? AND subtopicID = ? AND project = ?`;
+  const params = [topicID, subtopicID, projectName];
+  const clockResult = databaseHandler('run', clockSqlStatement, params);
+
+  const projectSqlStatement = `DELETE FROM projects WHERE topicID = ? AND subtopicID = ? AND project = ?`
+  const projectResult = databaseHandler('run', projectSqlStatement, params);
+
+  return projectResult, clockResult;
+
 }
 
 async function editProject(projectID, newName){

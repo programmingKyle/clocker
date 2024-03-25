@@ -98,6 +98,8 @@ function deleteSubjectListeners(element, subject){
                 await api.topicHandler({request: 'Delete', topicID: element.id});
             } else if (subject === 'Subtopic'){
                 await api.subtopicHandler({request: 'Delete', subtopicID: element.id});
+            } else if (subject === 'Project'){
+                await api.projectHandler({request: 'Delete', topicID: element.topicID, subtopicID: element.subtopicID, projectName: element.project});
             }
             confirmDeleteSubjectButton_el.value = '';
             await getAllActiveTopics();
