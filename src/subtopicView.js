@@ -1,5 +1,6 @@
 // Will be used when user clicks on a topic to review its information and display subtopics
 // topicListDiv_el
+
 const subtopicViewBackButton_el = document.getElementById('subtopicViewBackButton');
 
 async function populateSubtopics(topicID, topic) {
@@ -51,6 +52,11 @@ async function populateSubtopics(topicID, topic) {
 }
 
 subtopicViewBackButton_el.addEventListener('click', async () => {
+    subjectViewLocation -= 1;
+    if (subjectViewLocation === 0){
+        subtopicViewBackButton_el.style.display = 'none';
+        await populateQuickTimes();
+    }
     currentSelectedTopic = null;
     await populateTopicView();
 });
