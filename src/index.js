@@ -256,7 +256,7 @@ async function deleteTopic(topicID){
   const topicProjSql = `DELETE FROM projects WHERE topicID = ?`;
   deleteResult = databaseHandler('run', topicProjSql, params);
 
-  const topicClockSql = `DELETE FROM projects WHERE topicID = ?`
+  const topicClockSql = `DELETE FROM clock WHERE topicID = ?`
   deleteResult = databaseHandler('run', topicClockSql, params);
 
   return deleteResult;

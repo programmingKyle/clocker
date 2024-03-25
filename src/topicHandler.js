@@ -105,6 +105,7 @@ function deleteSubjectListeners(element, subject){
             await getAllActiveTopics();
             await getAllActiveProjects();
             overlayContainer_el.style.display = 'none';
+            
             projectInput_el.value = '';
         } else {
             deleteSubjectInput_el.classList.add('error');
