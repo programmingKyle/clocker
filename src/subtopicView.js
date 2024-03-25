@@ -39,8 +39,9 @@ async function populateSubtopics(topicID, topic) {
         subtopicItemDiv_el.append(subtopicNameText_el, subtopicTime_el);
     
         // Add event listener using a closure to capture the current value of 'element'
-        subtopicItemDiv_el.addEventListener('click', () => {
-            console.log(element.subtopic);
+        subtopicItemDiv_el.addEventListener('click', async () => {
+            subjectViewLocation = 2;
+            await populateProjects(element.subtopicID, 'Projects');
         });
 
         subtopicItemDiv_el.addEventListener('contextmenu', (event) => {
@@ -56,7 +57,10 @@ subtopicViewBackButton_el.addEventListener('click', async () => {
     if (subjectViewLocation === 0){
         subtopicViewBackButton_el.style.display = 'none';
         await populateQuickTimes();
+        await populateTopicView();
+    } else if (subjectViewLocation === 1){
+        await populateSubtopics(currentSelectedTopic.id, currentSelectedTopic.topic);
+        await populateSpecificQuickTimes('topic', currentSelectedTopic.id);
     }
     currentSelectedTopic = null;
-    await populateTopicView();
 });
