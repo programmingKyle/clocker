@@ -457,6 +457,8 @@ ipcMain.handle('project-handler', async (req, data) => {
     case 'Get':
       const projects = await getProjects();
       return projects;
+    case 'Edit':
+      await editProject(data.projectID, data.newName);
   }
 });
 
@@ -465,6 +467,16 @@ async function getProjects(){
   const params = [];
   const result = databaseHandler('all', sqlStatement, params);
   return result;
+}
+
+async function editProject(projectID, newName){
+  const sqlStatement = `UPDATE projects SET project = ? WHERE id = ?`;
+  const clockSqlStatement = `UPDATE clock SET project WHERE id = ?`; // not sure why i made the table like this...i'm too deep now. I hope someone finds this.
+  const params = [newName, projectID];
+  const result = databaseHandler('run', sqlStatement, params);
+  const clockResult = databaseHandler('run', clockSqlStatement, params);
+
+  return result, clockResult;
 }
 
 ipcMain.handle('specific-quick-times', async (req, data) => {
