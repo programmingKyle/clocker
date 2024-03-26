@@ -2,6 +2,11 @@ const monthHoursGraph_el = document.getElementById('monthHoursGraph');
 const ctx = monthHoursGraph_el.getContext('2d');
 let monthHours; // Variable to store the chart instance
 
+async function getMonthTimesGraph(){
+  const values = await api.graphHandler({request: 'GetMonth'})
+  console.log(values);
+}
+
 function getRandomNumber(min, max) {
   return (Math.random() * (max - min) + min).toFixed(1);
 }
@@ -67,8 +72,11 @@ function createChart() {
   });
 }
 
-// Initial setup
-monthHours = createChart();
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initial setup
+  await getMonthTimesGraph({request: 'GetMonth'});
+  monthHours = createChart();
+});
 
 window.addEventListener('resize', () => {
   // Destroy the existing chart instances for all canvases

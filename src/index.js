@@ -532,3 +532,13 @@ async function getSpecificQTTime(subject, id, dayCount){
   return result;
 }
 
+ipcMain.handle('graph-handler', (req, data) => {
+  if (!data || !data.request) return;
+  let values;
+  switch(data.request){
+    case 'GetMonth':
+      values = getSpecificTimes(30);
+      break;
+  }
+  return values;
+});
