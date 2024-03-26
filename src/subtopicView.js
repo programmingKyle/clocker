@@ -18,6 +18,14 @@ async function populateSubtopics(topicID, topic) {
     const noSubtopicTimeText_el = document.createElement('h3');
     noSubtopicTimeText_el.textContent = time;
 
+    noSubtopicItem_el.addEventListener('click', async () => {
+        console.log('No subtopic');
+        subjectViewLocation = 2;
+        currentSelectedSubtopic = 'null';
+        await populateProjects('null', 'Projects');
+        await populateSpecificQuickTimes('subtopic', 'null');
+    });
+
     topicListDiv_el.append(noSubtopicItem_el);
     noSubtopicItem_el.append(noSubtopicText_el, noSubtopicTimeText_el);
 
