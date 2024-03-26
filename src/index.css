@@ -48,6 +48,7 @@ button {
   color: white;
   border-radius: 3px;
   padding: 5px;
+  cursor: pointer;
 }
 
 button:hover {
@@ -74,6 +75,7 @@ select {
   outline: none; /* Remove the focus outline */
   min-width: 0;
   transition: box-shadow 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 select.error {
@@ -249,6 +251,7 @@ h1,h2,h3,h4,h5,h6 {
   background-color: #414141;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  cursor: pointer;
 }
 
 .project-item-div:hover {

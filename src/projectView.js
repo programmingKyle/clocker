@@ -4,8 +4,6 @@
 async function populateProjects(subtopicID, label){
     topicSubtopicHeader_el.textContent = label;
     topicListDiv_el.innerHTML = '';
-    console.log(activeProjects);
-    console.log(subtopicID);
     const filteredProjects = activeProjects.filter(element => parseInt(element.subtopicID) === parseInt(subtopicID) || element.subtopicID === 'null')
 
     filteredProjects.forEach(async (element) => {
