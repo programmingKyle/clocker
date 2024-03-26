@@ -34,9 +34,9 @@ async function populateRecentProjects(){
 }
 
 function projectEventListener(div, topicID, subtopicID, project){
-    div.addEventListener('click', () => {
+    div.addEventListener('click', async () => {
         topicSelect_el.value = topicID;
-        populateSubtopicSelect(topicID);
+        await populateSubtopicSelect(topicID);
         subtopicSelect_el.value = subtopicID;
         projectInput_el.value = project;
     });

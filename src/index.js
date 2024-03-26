@@ -461,7 +461,6 @@ ipcMain.handle('project-handler', async (req, data) => {
       await editProject(data.projectID, data.newName);
       break;
     case 'Delete':
-      console.log('Delete');
       await deleteProject(data.topicID, data.subtopicID, data.projectName);
       break;
   }
@@ -475,7 +474,6 @@ async function getProjects(){
 }
 
 async function deleteProject(topicID, subtopicID, projectName){
-  console.log(topicID, subtopicID, projectName);
   const clockSqlStatement = `DELETE FROM clock WHERE topicID = ? AND subtopicID = ? AND project = ?`;
   const params = [topicID, subtopicID, projectName];
   const clockResult = databaseHandler('run', clockSqlStatement, params);

@@ -23,7 +23,10 @@ async function populateProjects(subtopicID, label){
 
         // Add event listener using a closure to capture the current value of 'element'
         projectItemDiv_el.addEventListener('click', async () => {
-            console.log('You clicked the project!');
+            topicSelect_el.value = currentSelectedTopic.id;
+            await populateSubtopicSelect(currentSelectedTopic.id);
+            subtopicSelect_el.value = currentSelectedSubtopic;
+            projectInput_el.value = element.project;
         });
 
         projectItemDiv_el.addEventListener('contextmenu', (event) => {

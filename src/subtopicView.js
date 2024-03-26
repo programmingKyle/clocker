@@ -19,7 +19,6 @@ async function populateSubtopics(topicID, topic) {
     noSubtopicTimeText_el.textContent = time;
 
     noSubtopicItem_el.addEventListener('click', async () => {
-        console.log('No subtopic');
         subjectViewLocation = 2;
         currentSelectedSubtopic = 'null';
         await populateProjects('null', 'Projects');
@@ -50,6 +49,7 @@ async function populateSubtopics(topicID, topic) {
         subtopicItemDiv_el.addEventListener('click', async () => {
             subjectViewLocation = 2;
             currentSelectedSubtopic = element.id;
+            console.log(currentSelectedSubtopic);
             await populateProjects(element.id, 'Projects');
             await populateSpecificQuickTimes('subtopic', element.id);
         });
@@ -68,9 +68,9 @@ subtopicViewBackButton_el.addEventListener('click', async () => {
         subtopicViewBackButton_el.style.display = 'none';
         await populateQuickTimes();
         await populateTopicView();
+        currentSelectedTopic = null;
     } else if (subjectViewLocation === 1){
         await populateSubtopics(currentSelectedTopic.id, currentSelectedTopic.topic);
         await populateSpecificQuickTimes('topic', currentSelectedTopic.id);
     }
-    currentSelectedTopic = null;
 });
