@@ -43,6 +43,7 @@ async function populateSubtopics(topicID, topic) {
             subjectViewLocation = 2;
             currentSelectedSubtopic = element.id;
             await populateProjects(element.id, 'Projects');
+            await populateSpecificQuickTimes('subtopic', element.id);
         });
 
         subtopicItemDiv_el.addEventListener('contextmenu', (event) => {
