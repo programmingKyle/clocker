@@ -1,43 +1,55 @@
 const monthHoursGraph_el = document.getElementById('monthHoursGraph');
 const ctx = monthHoursGraph_el.getContext('2d');
-let monthHours; // Variable to store the chart instance
+
+let last30Days;
+let last30DaysValues = [];
+let monthHoursGraph; // Variable to store the chart instance
 
 async function getMonthTimesGraph(){
-  const values = await api.graphHandler({request: 'GetMonth'})
-  console.log(values);
+  const values = await api.graphHandler({request: 'GetMonth'});
+  last30Days = await getLast30Days();
+  last30Days.forEach(async (day) => {
+    // Filter values for current day
+    const dayValues = values.filter(entry => {
+      const entryDate = entry.date.split(' ')[0];
+      if (entryDate === day){
+        return entry.time;
+      }
+    });
+    const dayTotal = await calculateTotalTime(dayValues);
+    last30DaysValues.push(dayTotal);
+  });
 }
 
-function getRandomNumber(min, max) {
-  return (Math.random() * (max - min) + min).toFixed(1);
-}
-
-function getLast30Days() {
+async function getLast30Days() {
   const labels = [];
   const today = new Date();
-
   for (let i = 29; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
-    const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    labels.push(formattedTime);
+    const formattedDate = date.toISOString().slice(0, 10); // Get yyyy-mm-dd format
+    labels.push(formattedDate);
   }
-
   return labels;
 }
 
 function createChart() {
+  // Reverse the order of the labels and values arrays
+  const reversedLabels = last30Days.slice().reverse();
+  const reversedValues = last30DaysValues.slice().reverse();
+
   return new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: getLast30Days(),
+      labels: reversedLabels,
       datasets: [{
-        data: Array.from({ length: 30 }, () => getRandomNumber(0.5, 8)),
+        data: reversedValues,
         borderWidth: 1
       }]
     },
     options: {
-      maintainAspectRatio: false, // Allow canvas to adjust size
-      responsive: true, // Allow canvas to be responsive
+      maintainAspectRatio: false,
+      responsive: true,
       plugins: {
         legend: {
           display: false,
@@ -72,10 +84,27 @@ function createChart() {
   });
 }
 
+async function calculateTotalTime(entries) {
+  let totalTime = 0;
+
+  entries.forEach(element => {
+      const timeComponents = element.time.split(':');
+
+      const hours = parseInt(timeComponents[0], 10);
+      const minutes = parseInt(timeComponents[1], 10);
+      const seconds = parseInt(timeComponents[2], 10);
+      const milliseconds = parseInt(timeComponents[3], 10);
+
+      totalTime += hours * 3600000 + minutes * 60000 + seconds * 1000 + milliseconds;
+  });
+  totalTime /= 3600000;
+  return totalTime.toFixed(1);
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   // Initial setup
   await getMonthTimesGraph({request: 'GetMonth'});
-  monthHours = createChart();
+  monthHoursGraph = createChart();
 });
 
 window.addEventListener('resize', () => {
@@ -86,12 +115,12 @@ window.addEventListener('resize', () => {
   if (annualHoursGraph) {
     annualHoursGraph.destroy();
   }
-  if (monthHours) {
-    monthHours.destroy();
+  if (monthHoursGraph) {
+    monthHoursGraph.destroy();
   }
 
   // Recreate the chart instances for all canvases with updated dimensions
   weekCompareGraph = createWeekCompare();
   annualHoursGraph = createAnnualHoursGraph();
-  monthHours = createChart();
+  monthHoursGraph = createChart();
 });
