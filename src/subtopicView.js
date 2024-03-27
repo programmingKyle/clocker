@@ -21,6 +21,7 @@ async function populateSubtopics(topicID, topic) {
     noSubtopicItem_el.addEventListener('click', async () => {
         subjectViewLocation = 2;
         currentSelectedSubtopic = 'null';
+        await populate30DayGraph('Subtopic', 'null');
         await populateProjects('null', 'Projects');
         await populateSpecificQuickTimes('subtopic', 'null');
     });
