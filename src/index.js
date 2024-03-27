@@ -539,11 +539,9 @@ ipcMain.handle('graph-handler', async (req, data) => {
       break;
     case 'GetTopicMonth':
       values = getSpecificSubjectTimes('topic', 30, data.id);
-      console.log(values);
       break;
     case 'GetSubtopicMonth':
       values = getSpecificSubjectTimes('subtopic', 30, data.id);
-      console.log(values);
       break;
   }
   return values;
@@ -564,10 +562,8 @@ async function getSpecificSubjectTimes(scope, dayCount, id){
   const startDate = new Date();
   startDate.setDate(startDate.getDate() - (dayCount - 1));
   const formattedStartDate = startDate.toISOString().split('T')[0];
-  console.log('Another');
 
   const sqlStatement = `SELECT * FROM clock WHERE date >= ? AND ${scope}ID = ?`;
-  console.log(sqlStatement);
   const params = [formattedStartDate, id];
   const result = await databaseHandler('all', sqlStatement, params);
   return result;

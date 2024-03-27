@@ -114,6 +114,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function populate30DayGraph(scope, id){
+  if (monthHoursGraph){
+    monthHoursGraph.destroy();
+  }
+  console.log(scope, id);
   await getMonthTimesGraph(scope, id);
   monthHoursGraph = createChart();
 }

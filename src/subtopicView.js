@@ -49,7 +49,7 @@ async function populateSubtopics(topicID, topic) {
         subtopicItemDiv_el.addEventListener('click', async () => {
             subjectViewLocation = 2;
             currentSelectedSubtopic = element.id;
-            console.log(currentSelectedSubtopic);
+            await populate30DayGraph('Subtopic', element.id);
             await populateProjects(element.id, 'Projects');
             await populateSpecificQuickTimes('subtopic', element.id);
         });
@@ -68,9 +68,11 @@ subtopicViewBackButton_el.addEventListener('click', async () => {
         subtopicViewBackButton_el.style.display = 'none';
         await populateQuickTimes();
         await populateTopicView();
+        await populate30DayGraph('All')
         currentSelectedTopic = null;
     } else if (subjectViewLocation === 1){
         await populateSubtopics(currentSelectedTopic.id, currentSelectedTopic.topic);
         await populateSpecificQuickTimes('topic', currentSelectedTopic.id);
+        await populate30DayGraph('Topic', currentSelectedTopic.id);
     }
 });
