@@ -425,8 +425,6 @@ async function getSubtopicTime(topic, subtopic){
   return result;
 }
 
-
-
 async function calculateTotalTime(entries) {
   let totalTime = 0;
 
@@ -532,13 +530,47 @@ async function getSpecificQTTime(subject, id, dayCount){
   return result;
 }
 
-ipcMain.handle('graph-handler', (req, data) => {
+ipcMain.handle('graph-handler', async (req, data) => {
   if (!data || !data.request) return;
   let values;
   switch(data.request){
     case 'GetMonth':
-      values = getSpecificTimes(30);
+      values = await getSubjectTimes(30);
+      break;
+    case 'GetTopicMonth':
+      values = getSpecificSubjectTimes('topic', 30, data.id);
+      console.log(values);
+      break;
+    case 'GetSubtopicMonth':
+      values = getSpecificSubjectTimes('subtopic', 30, data.id);
+      console.log(values);
       break;
   }
   return values;
 });
+
+async function getSubjectTimes(dayCount) {
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - (dayCount - 1));
+  const formattedStartDate = startDate.toISOString().split('T')[0];
+
+  const sqlStatement = `SELECT * FROM clock WHERE date >= ?`;
+  const params = [formattedStartDate];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
+async function getSpecificSubjectTimes(scope, dayCount, id){
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - (dayCount - 1));
+  const formattedStartDate = startDate.toISOString().split('T')[0];
+  console.log('Another');
+
+  const sqlStatement = `SELECT * FROM clock WHERE date >= ? AND ${scope}ID = ?`;
+  console.log(sqlStatement);
+  const params = [formattedStartDate, id];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+};
+
+

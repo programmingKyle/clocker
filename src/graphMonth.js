@@ -5,8 +5,15 @@ let last30Days;
 let last30DaysValues = [];
 let monthHoursGraph; // Variable to store the chart instance
 
-async function getMonthTimesGraph(){
-  const values = await api.graphHandler({request: 'GetMonth'});
+async function getMonthTimesGraph(scope, id){
+  let values;
+  if (scope === 'All') {
+    values = await api.graphHandler({ request: 'GetMonth' });
+  } else if (scope === 'Topic') {
+    values = await api.graphHandler({ request: 'GetTopicMonth', id });
+  } else if (scope === 'Subtopic') {
+    values = await api.graphHandler({ request: 'GetSubtopicMonth', id });
+  }
   last30Days = await getLast30Days();
   last30Days.forEach(async (day) => {
     // Filter values for current day
@@ -103,9 +110,13 @@ async function calculateTotalTime(entries) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Initial setup
-  await getMonthTimesGraph({request: 'GetMonth'});
-  monthHoursGraph = createChart();
+  await populate30DayGraph('All')
 });
+
+async function populate30DayGraph(scope, id){
+  await getMonthTimesGraph(scope, id);
+  monthHoursGraph = createChart();
+}
 
 window.addEventListener('resize', () => {
   // Destroy the existing chart instances for all canvases
