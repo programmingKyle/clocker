@@ -43,6 +43,9 @@ function startTimer(){
 }
 
 async function stopTimer(){
+    if (subtopicViewBackButton_el.style.display != 'none'){
+        subtopicViewBackButton_el.style.display = 'none';
+    }
     logStopTime = Date.now();
     timerActive = false;
     const logTime = logStopTime - logStartTime;
@@ -52,6 +55,7 @@ async function stopTimer(){
     await populateQuickTimes();
     await getAllActiveProjects();
     await populateTopicView();
+    await populate30DayGraph('All');
     toggleInputsDiv();
 }
 

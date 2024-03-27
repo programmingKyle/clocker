@@ -110,14 +110,13 @@ async function calculateTotalTime(entries) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Initial setup
-  await populate30DayGraph('All')
+  await populate30DayGraph('All');
 });
 
 async function populate30DayGraph(scope, id){
   if (monthHoursGraph){
     monthHoursGraph.destroy();
   }
-  console.log(scope, id);
   await getMonthTimesGraph(scope, id);
   monthHoursGraph = createChart();
 }
