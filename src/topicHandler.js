@@ -103,6 +103,8 @@ function deleteSubjectListeners(element, subject){
                 await api.projectHandler({request: 'Delete', topicID: element.topicID, subtopicID: element.subtopicID, projectName: element.project});
             }
             confirmDeleteSubjectButton_el.value = '';
+            await populateQuickTimes();
+            await populate30DayGraph('All');
             await getAllActiveTopics();
             await getAllActiveSubtopics();
             await getAllActiveProjects();
