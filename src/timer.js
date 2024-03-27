@@ -43,9 +43,7 @@ function startTimer(){
 }
 
 async function stopTimer(){
-    if (subtopicViewBackButton_el.style.display != 'none'){
-        subtopicViewBackButton_el.style.display = 'none';
-    }
+    hideSubjectBackButton();
     logStopTime = Date.now();
     timerActive = false;
     const logTime = logStopTime - logStartTime;
