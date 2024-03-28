@@ -70,11 +70,14 @@ subtopicViewBackButton_el.addEventListener('click', async () => {
         subtopicViewBackButton_el.style.display = 'none';
         await populateQuickTimes();
         await populateTopicView();
-        await populate30DayGraph('All')
+        await populate30DayGraph('All');
+        await populateAnnualGraph('All');
         currentSelectedTopic = null;
     } else if (subjectViewLocation === 1){
         await populateSubtopics(currentSelectedTopic.id, currentSelectedTopic.topic);
         await populateSpecificQuickTimes('topic', currentSelectedTopic.id);
         await populate30DayGraph('Topic', currentSelectedTopic.id);
+        await populateAnnualGraph('Topic', currentSelectedTopic.id);
+
     }
 });
