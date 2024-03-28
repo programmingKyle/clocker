@@ -2,11 +2,9 @@
 // This will show all projects relating to a specific subtopic
 
 async function populateProjects(subtopicID, label){
-    console.log(subtopicID);
     topicSubtopicHeader_el.textContent = label;
     topicListDiv_el.innerHTML = '';
     const filteredProjects = activeProjects.filter(element => element.subtopicID === subtopicID);
-    console.log(filteredProjects)
     filteredProjects.forEach(async (element) => {
         const projectItemDiv_el = document.createElement('div');
         projectItemDiv_el.classList.add('topic-item-div');

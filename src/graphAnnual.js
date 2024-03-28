@@ -6,20 +6,30 @@ let annualHoursGraph; // Variable to store the chart instance
 let annualValues = [];
 
 function getMonths() {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
   const months = [];
-  for (let i = 0; i < 12; i++) {
-    months.push(new Date(2023, i, 1).toLocaleString('en-us', { month: 'long' }));
+
+  months.push(currentDate.toLocaleString('en-us', { month: 'long' }));
+
+  for (let i = 1; i <= 11; i++) {
+    const month = currentMonth - i >= 0 ? currentMonth - i : 12 + (currentMonth - i);
+    const year = currentMonth - i >= 0 ? currentYear : currentYear - 1;
+    months.push(new Date(year, month, 1).toLocaleString('en-us', { month: 'long' }));
   }
+
   return months;
 }
 
 function createAnnualHoursGraph() {
+  const reversedValues = annualValues.slice().reverse();
   return new Chart(ctxAnnualHours, {
     type: 'bar',
     data: {
       labels: getMonths(),
       datasets: [{
-        data: annualValues,
+        data: reversedValues,
         borderWidth: 1
       }]
     },
@@ -84,5 +94,4 @@ async function populateAnnualGraph(scope, id){
   }
   await getAnnualGraphData(scope, id);
   annualHoursGraph = createAnnualHoursGraph();
-  console.log('remake');
 }

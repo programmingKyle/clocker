@@ -571,7 +571,6 @@ async function getSpecificSubjectTimes(scope, dayCount, id){
 
 
 ipcMain.handle('graph-annual-handler', async (req, data) => {
-  console.log(data);
   if (!data || !data.request) return;
   let values;
   switch(data.request){
@@ -605,7 +604,6 @@ async function getAnnualSubjectTime(){
 }
 
 async function getSpecificAnnualTimes(scope, id){
-  console.log(scope, id);
   const startDate = new Date();
   startDate.setFullYear(startDate.getFullYear() - 1);
   const formatedDate = startDate.toISOString().split('T')[0];
