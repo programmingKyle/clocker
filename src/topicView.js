@@ -31,6 +31,7 @@ async function populateTopicView(){
             subtopicViewBackButton_el.style.display = 'block';
             currentSelectedTopic = ({id: element.id, topic: element.topic});
             await populate30DayGraph('Topic', element.id);
+            await populateAnnualGraph('Topic', element.id);
             await populateSubtopics(element.id, element.topic);
             await populateSpecificQuickTimes('topic', element.id);
         });
