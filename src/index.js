@@ -571,21 +571,19 @@ async function getSpecificSubjectTimes(scope, dayCount, id){
 
 
 ipcMain.handle('graph-annual-handler', async (req, data) => {
+  console.log(data);
   if (!data || !data.request) return;
   let values;
   switch(data.request){
     case 'GetAnnual':
       values = await getAnnualSubjectTime();
       break;
-      
-    /*
     case 'GetTopicAnnual':
-      values = getSpecificSubjectTimes('topic', 30, data.id);
+      values = getSpecificAnnualTimes('topic', data.id);
       break;
     case 'GetSubtopicAnnual':
-      values = getSpecificSubjectTimes('subtopic', 30, data.id);
+      values = getSpecificAnnualTimes('subtopic', data.id);
       break;
-    */
   }
   return values;
 });
@@ -605,3 +603,22 @@ async function getAnnualSubjectTime(){
   const result = await databaseHandler('all', sqlStatement, params);
   return result;
 }
+
+async function getSpecificAnnualTimes(scope, id){
+  console.log(scope, id);
+  const startDate = new Date();
+  startDate.setFullYear(startDate.getFullYear() - 1);
+  const formatedDate = startDate.toISOString().split('T')[0];
+
+  const sqlStatement = 
+  `SELECT
+    SUM(time) AS total
+  FROM clock
+  WHERE date >= ?
+  AND ${scope}ID = ?
+  GROUP BY strftime('%Y-%m', date)`;
+  const params = [formatedDate, id];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+

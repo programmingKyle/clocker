@@ -62,18 +62,28 @@ function createAnnualHoursGraph() {
 
 // Initial setup
 document.addEventListener('DOMContentLoaded', async () => {
-  annualHoursGraph = createAnnualHoursGraph();
   annualValues = await getAnnualGraphData('All');
-  console.log(annualValues);
+  annualHoursGraph = createAnnualHoursGraph();
 });
 
 async function getAnnualGraphData(scope, id){
-  let totalHours;
+  let values;
   if (scope === 'All'){
-    const values = await api.graphAnnualHandler({request: 'GetAnnual'});
-    totalHours = values.map(element => element.total);
-    console.log(totalHours);
+    values = await api.graphAnnualHandler({request: 'GetAnnual'});
+  } else if (scope === 'Topic'){
+    values = await api.graphAnnualHandler({request: 'GetTopicAnnual', id});
+  } else if (scope === 'Subtopic'){
+    values = await api.graphAnnualHandler({request: 'GetSubtopicAnnual', id});
   }
-  
+  console.log(values);
+  const totalHours = values.map(element => element.total);  
   return totalHours;
+}
+
+async function populateAnnualGraph(scope, id){
+  if (annualHoursGraph){
+    annualHoursGraph.destroy();
+  }
+  await getAnnualGraphData(scope, id);
+  annualHoursGraph = createAnnualHoursGraph();
 }
