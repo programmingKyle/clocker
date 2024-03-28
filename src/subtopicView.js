@@ -51,6 +51,7 @@ async function populateSubtopics(topicID, topic) {
             subjectViewLocation = 2;
             currentSelectedSubtopic = element.id;
             await populate30DayGraph('Subtopic', element.id);
+            await populateAnnualGraph('Subtopic', element.id);
             await populateProjects(element.id, 'Projects');
             await populateSpecificQuickTimes('subtopic', element.id);
         });
