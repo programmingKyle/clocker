@@ -1,10 +1,9 @@
 const annualHoursGraph_el = document.getElementById('annualHoursGraph');
 const ctxAnnualHours = annualHoursGraph_el.getContext('2d');
-let annualHoursGraph; // Variable to store the chart instance
 
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+
+let annualHoursGraph; // Variable to store the chart instance
+let annualValues = [];
 
 function getMonths() {
   const months = [];
@@ -20,7 +19,7 @@ function createAnnualHoursGraph() {
     data: {
       labels: getMonths(),
       datasets: [{
-        data: Array.from({ length: 12 }, () => getRandomNumber(30, 150)),
+        data: annualValues,
         borderWidth: 1
       }]
     },
@@ -64,6 +63,17 @@ function createAnnualHoursGraph() {
 // Initial setup
 document.addEventListener('DOMContentLoaded', async () => {
   annualHoursGraph = createAnnualHoursGraph();
-  const values = await api.graphAnnualHandler({request: 'GetAnnual'});
-  console.log(values);
+  annualValues = await getAnnualGraphData('All');
+  console.log(annualValues);
 });
+
+async function getAnnualGraphData(scope, id){
+  let totalHours;
+  if (scope === 'All'){
+    const values = await api.graphAnnualHandler({request: 'GetAnnual'});
+    totalHours = values.map(element => element.total);
+    console.log(totalHours);
+  }
+  
+  return totalHours;
+}

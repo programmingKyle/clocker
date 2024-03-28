@@ -597,8 +597,7 @@ async function getAnnualSubjectTime(){
 
   const sqlStatement = 
   `SELECT
-    strftime('%Y-%m', date) AS month,
-    SUM(time) AS total_time
+    SUM(time) AS total
   FROM clock
   WHERE date >= ?
   GROUP BY strftime('%Y-%m', date)`;
