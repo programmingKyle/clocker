@@ -5,6 +5,16 @@ let last30Days;
 let last30DaysValues = [];
 let monthHoursGraph; // Variable to store the chart instance
 
+function grabCurrentDate(){
+  const currentDate = new Date();
+  var  date = currentDate.toLocaleDateString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+  var year = date.split('/')[2];
+  var month = date.split('/')[0].padStart(2, '0');
+  var day = date.split('/')[1].padStart(2, '0');
+  date = `${year}-${month}-${day}`;
+  return date;
+}
+
 async function getMonthTimesGraph(scope, id){
   let values;
   if (scope === 'All') {
@@ -45,12 +55,15 @@ function createChart() {
   const reversedLabels = last30Days.slice().reverse();
   const reversedValues = last30DaysValues.slice().reverse();
 
+  const currentDate = grabCurrentDate();
+
   return new Chart(ctx, {
     type: 'bar',
     data: {
       labels: reversedLabels,
       datasets: [{
         data: reversedValues,
+        backgroundColor: reversedLabels.map(date => (date === currentDate) ? '#FFFFFF' : '#1976D2'),
         borderWidth: 1
       }]
     },
