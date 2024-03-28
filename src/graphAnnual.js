@@ -4,6 +4,7 @@ const ctxAnnualHours = annualHoursGraph_el.getContext('2d');
 
 let annualHoursGraph; // Variable to store the chart instance
 let annualValues = [];
+let currentMonthFormatted;
 
 function getMonths() {
   const currentDate = new Date();
@@ -11,7 +12,9 @@ function getMonths() {
   const currentYear = currentDate.getFullYear();
   const months = [];
 
-  months.push(currentDate.toLocaleString('en-us', { month: 'long' }));
+  currentMonthFormatted = currentDate.toLocaleString('en-us', { month: 'long' }); // Assign formatted current month name
+
+  months.push(currentMonthFormatted);
 
   for (let i = 1; i <= 11; i++) {
     const month = currentMonth - i >= 0 ? currentMonth - i : 12 + (currentMonth - i);
@@ -24,12 +27,14 @@ function getMonths() {
 
 function createAnnualHoursGraph() {
   const reversedValues = annualValues.slice().reverse();
+  const monthLabels = getMonths();
   return new Chart(ctxAnnualHours, {
     type: 'bar',
     data: {
-      labels: getMonths(),
+      labels: monthLabels,
       datasets: [{
         data: reversedValues,
+        backgroundColor: monthLabels.map(date => (date === currentMonthFormatted) ? '#FFFFFF' : '#1976D2'),
         borderWidth: 1
       }]
     },

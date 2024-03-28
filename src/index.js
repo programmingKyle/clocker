@@ -569,7 +569,6 @@ async function getSpecificSubjectTimes(scope, dayCount, id){
   return result;
 };
 
-
 ipcMain.handle('graph-annual-handler', async (req, data) => {
   if (!data || !data.request) return;
   let values;
