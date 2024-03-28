@@ -530,7 +530,7 @@ async function getSpecificQTTime(subject, id, dayCount){
   return result;
 }
 
-ipcMain.handle('graph-handler', async (req, data) => {
+ipcMain.handle('graph-month-handler', async (req, data) => {
   if (!data || !data.request) return;
   let values;
   switch(data.request){
@@ -570,3 +570,39 @@ async function getSpecificSubjectTimes(scope, dayCount, id){
 };
 
 
+ipcMain.handle('graph-annual-handler', async (req, data) => {
+  if (!data || !data.request) return;
+  let values;
+  switch(data.request){
+    case 'GetAnnual':
+      values = await getAnnualSubjectTime();
+      break;
+      
+    /*
+    case 'GetTopicAnnual':
+      values = getSpecificSubjectTimes('topic', 30, data.id);
+      break;
+    case 'GetSubtopicAnnual':
+      values = getSpecificSubjectTimes('subtopic', 30, data.id);
+      break;
+    */
+  }
+  return values;
+});
+
+async function getAnnualSubjectTime(){
+  const startDate = new Date();
+  startDate.setFullYear(startDate.getFullYear() - 1);
+  const formatedDate = startDate.toISOString().split('T')[0];
+
+  const sqlStatement = 
+  `SELECT
+    strftime('%Y-%m', date) AS month,
+    SUM(time) AS total_time
+  FROM clock
+  WHERE date >= ?
+  GROUP BY strftime('%Y-%m', date)`;
+  const params = [formatedDate];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}

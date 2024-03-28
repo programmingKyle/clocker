@@ -8,11 +8,11 @@ let monthHoursGraph; // Variable to store the chart instance
 async function getMonthTimesGraph(scope, id){
   let values;
   if (scope === 'All') {
-    values = await api.graphHandler({ request: 'GetMonth' });
+    values = await api.graphMonthHandler({ request: 'GetMonth' });
   } else if (scope === 'Topic') {
-    values = await api.graphHandler({ request: 'GetTopicMonth', id });
+    values = await api.graphMonthHandler({ request: 'GetTopicMonth', id });
   } else if (scope === 'Subtopic') {
-    values = await api.graphHandler({ request: 'GetSubtopicMonth', id });
+    values = await api.graphMonthHandler({ request: 'GetSubtopicMonth', id });
   }
   last30Days = await getLast30Days();
   last30Days.forEach(async (day) => {

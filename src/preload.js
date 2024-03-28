@@ -8,7 +8,8 @@ contextBridge.exposeInMainWorld('api', {
     quickTimesHandler: (data) => ipcRenderer.invoke('quick-times-handler', data),
     projectHandler: (data) => ipcRenderer.invoke('project-handler', data),
     specificQuickTimes: (data) => ipcRenderer.invoke('specific-quick-times', data),
-    graphHandler: (data) => ipcRenderer.invoke('graph-handler', data),
+    graphMonthHandler: (data) => ipcRenderer.invoke('graph-month-handler', data),
+    graphAnnualHandler: (data) => ipcRenderer.invoke('graph-annual-handler', data),
 });
 
 contextBridge.exposeInMainWorld('autoUpdater', {

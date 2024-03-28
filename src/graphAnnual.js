@@ -62,4 +62,8 @@ function createAnnualHoursGraph() {
 }
 
 // Initial setup
-annualHoursGraph = createAnnualHoursGraph();
+document.addEventListener('DOMContentLoaded', async () => {
+  annualHoursGraph = createAnnualHoursGraph();
+  const values = await api.graphAnnualHandler({request: 'GetAnnual'});
+  console.log(values);
+});
