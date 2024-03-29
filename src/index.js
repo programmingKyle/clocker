@@ -626,17 +626,51 @@ ipcMain.handle('graph-compare-handler', async (req, data) => {
     case 'All':
       values = await getWeeklyCompareTimes();
       break;
-    /*
     case 'Topic':
       values = getSpecificCompareTimes('topic', data.id);
       break;
     case 'Subtopic':
       values = getSpecificCompareTimes('subtopic', data.id);
       break;
-    */
   }
   return values;
 });
+
+async function getSpecificCompareTimes(scope, id){
+  const today = new Date();
+  const thisWeek = [];
+  const lastWeek = [];
+
+  for (let i = 0; i < 14; i++){
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    let formatedDate = date.toISOString().split('T')[0];
+    let timeData = await getSpecificCompareData(formatedDate, scope, id);
+    let time = timeData.length > 0 ? timeData[0].total : 0;
+    if (i < 7){
+      thisWeek.push({ date: formatedDate, time: time });
+    } else {
+      lastWeek.push({ date: formatedDate, time: time });
+    }
+  }
+  return {thisWeek, lastWeek}
+}
+
+async function getSpecificCompareData(formatedDate, scope, id){
+  const sqlStatement = 
+  `SELECT
+    SUM(time) AS total
+  FROM clock
+  WHERE DATE(date) = ?
+  AND ${scope}ID = ?
+  GROUP BY DATE(date)`;
+  const params = [formatedDate, id];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
+
+
 
 async function getWeeklyCompareTimes(){
   const today = new Date();

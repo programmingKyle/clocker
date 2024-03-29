@@ -32,6 +32,7 @@ async function populateTopicView(){
             currentSelectedTopic = ({id: element.id, topic: element.topic});
             await populate30DayGraph('Topic', element.id);
             await populateAnnualGraph('Topic', element.id);
+            await populateWeeklyCompareGraph('Topic', element.id);
             await populateSubtopics(element.id, element.topic);
             await populateSpecificQuickTimes('topic', element.id);
         });
