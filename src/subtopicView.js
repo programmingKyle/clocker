@@ -22,6 +22,8 @@ async function populateSubtopics(topicID, topic) {
         subjectViewLocation = 2;
         currentSelectedSubtopic = 'null';
         await populate30DayGraph('Subtopic', 'null');
+        await populateWeeklyCompareGraph('Subtopic', 'null');
+        await populateAnnualGraph('Subtopic', 'null');
         await populateProjects('null', 'Projects');
         await populateSpecificQuickTimes('subtopic', 'null');
     });
