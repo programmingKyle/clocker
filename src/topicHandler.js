@@ -108,6 +108,7 @@ function deleteSubjectListeners(element, subject){
             await populateQuickTimes();
             await populate30DayGraph('All');
             await populateAnnualGraph('All');
+            await populateWeeklyCompareGraph('All');
             await getAllActiveTopics();
             await getAllActiveSubtopics();
             await getAllActiveProjects();
