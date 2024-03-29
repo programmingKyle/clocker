@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('api', {
     specificQuickTimes: (data) => ipcRenderer.invoke('specific-quick-times', data),
     graphMonthHandler: (data) => ipcRenderer.invoke('graph-month-handler', data),
     graphAnnualHandler: (data) => ipcRenderer.invoke('graph-annual-handler', data),
+    graphCompareHandler: (data) => ipcRenderer.invoke('graph-compare-handler', data),
 });
 
 contextBridge.exposeInMainWorld('autoUpdater', {

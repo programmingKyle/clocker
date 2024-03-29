@@ -1,6 +1,7 @@
 const topicHoursGraph_el = document.getElementById('topicHoursGraph');
 const ctxTopicHours = topicHoursGraph_el.getContext('2d');
-let weekCompareGraph; // Variable to store the chart instance
+
+let weekCompareGraph;
 
 function getRandomNumber(min, max) {
   return (Math.random() * (max - min) + min).toFixed(1);
@@ -63,4 +64,29 @@ function createWeekCompare() {
 }
 
 // Initial setup
-weekCompareGraph = createWeekCompare();
+document.addEventListener('DOMContentLoaded', async () => {
+  await populateWeeklyCompareGraph('All');
+});
+
+async function getCompareData(scope, id){
+  let values;
+  if (scope === 'All'){
+    values = await api.graphCompareHandler({request: 'All'});
+  } else if (scope === 'Topic'){
+    values = await api.graphCompareHandler({request: 'Topic', id});
+  } else if (scope === 'Subtopic'){
+    values = await api.graphCompareHandler({request: 'Subtopic', id});
+  }
+  console.log(values);
+  // Need to get current week values and previous week values
+  //currentWeekValues = values.map(element => element.total);  
+  //return annualValues;
+}
+
+async function populateWeeklyCompareGraph(scope, id){
+  if (weekCompareGraph){
+    weekCompareGraph.destroy();
+  }
+  await getCompareData(scope, id);
+  weekCompareGraph = createWeekCompare();
+}

@@ -619,3 +619,55 @@ async function getSpecificAnnualTimes(scope, id){
   return result;
 }
 
+ipcMain.handle('graph-compare-handler', async (req, data) => {
+  if (!data || !data.request) return;
+  let values;
+  switch(data.request){
+    case 'All':
+      values = await getWeeklyCompareTimes();
+      break;
+    /*
+    case 'Topic':
+      values = getSpecificCompareTimes('topic', data.id);
+      break;
+    case 'Subtopic':
+      values = getSpecificCompareTimes('subtopic', data.id);
+      break;
+    */
+  }
+  return values;
+});
+
+async function getWeeklyCompareTimes(){
+  const today = new Date();
+  const thisWeek = [];
+  const lastWeek = [];
+
+  for (let i = 0; i < 14; i++){
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    let formatedDate = date.toISOString().split('T')[0];
+    let timeData = await getCompareDayTime(formatedDate);
+    let time = timeData.length > 0 ? timeData[0].total : 0;
+    if (i < 7){
+      thisWeek.push({ date: formatedDate, time: time });
+    } else {
+      lastWeek.push({ date: formatedDate, time: time });
+    }
+  }
+
+  return {thisWeek, lastWeek}
+}
+
+async function getCompareDayTime(formatedDate){
+  const sqlStatement = 
+  `SELECT
+    SUM(time) AS total
+  FROM clock
+  WHERE DATE(date) = ?
+  GROUP BY DATE(date)`;
+  const params = [formatedDate];
+  const result = await databaseHandler('all', sqlStatement, params);
+  return result;
+}
+
