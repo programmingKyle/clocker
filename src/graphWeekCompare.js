@@ -34,6 +34,7 @@ function createWeekCompare() {
         title: {
           display: true,
           text: 'Weekly Hours Comparison',
+          color: '#5E9FDF',
         },
         legend: {
           display: false // Hide legend
@@ -48,7 +49,8 @@ function createWeekCompare() {
             stepSize: 1, // Step size for y-axis ticks
             font: {
               size: 12 // Adjust font size for y-axis ticks
-            }
+            },
+            color: '#5E9FDF',
           }
         },
         x: {

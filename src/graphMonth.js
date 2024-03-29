@@ -77,6 +77,7 @@ function createChart() {
         title:{
           display: true,
           text: 'Past 30 Days',
+          color: '#5E9FDF',
         }
       },
       scales: {
@@ -87,7 +88,7 @@ function createChart() {
           ticks: {
             beginAtZero: true,
             display: true,
-            fontColor: '#1976D2',
+            color: '#5E9FDF',
           },
         },
         x: {
@@ -96,7 +97,6 @@ function createChart() {
           },
           ticks: {
             display: false,
-            fontColor: '#1976D2',
           },
         },
       },

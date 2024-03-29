@@ -48,6 +48,7 @@ function createAnnualHoursGraph() {
         title: {
           display: true,
           text: 'Annual Hours',
+          color: '#5E9FDF',
         },
       },
       scales: {
@@ -58,7 +59,7 @@ function createAnnualHoursGraph() {
           ticks: {
             beginAtZero: true,
             display: true,
-            fontColor: '#1976D2',
+            color: '#5E9FDF',
           },
         },
         x: {
@@ -67,7 +68,6 @@ function createAnnualHoursGraph() {
           },
           ticks: {
             display: false,
-            fontColor: '#1976D2',
           },
         },
       },
