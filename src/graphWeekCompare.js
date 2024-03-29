@@ -3,19 +3,15 @@ const ctxTopicHours = topicHoursGraph_el.getContext('2d');
 
 let weekCompareGraph;
 
-function getRandomNumber(min, max) {
-  return (Math.random() * (max - min) + min).toFixed(1);
-}
+let currentWeekDays = [];
+let currentWeekHours;
+let previousWeekHours;
 
 function createWeekCompare() {
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  const previousWeekHours = days.map(() => getRandomNumber(0.5, 8));
-  const currentWeekHours = days.map(() => getRandomNumber(0.5, 8));
-
   return new Chart(ctxTopicHours, {
     type: 'line',
     data: {
-      labels: days,
+      labels: currentWeekDays,
       datasets: [{
         label: 'Previous Week',
         data: previousWeekHours,
@@ -65,8 +61,26 @@ function createWeekCompare() {
 
 // Initial setup
 document.addEventListener('DOMContentLoaded', async () => {
+  await getDaysOfWeek();
   await populateWeeklyCompareGraph('All');
 });
+
+async function getDaysOfWeek(){
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const today = new Date();
+  
+  for (let i = 0; i < 7; i++) {
+    const previousDay = new Date(today);
+    previousDay.setDate(today.getDate() - i);
+    let previousDayName;
+    if (i === 0){
+      previousDayName = 'Current';
+    } else {
+      previousDayName = daysOfWeek[previousDay.getDay()];
+    }
+    currentWeekDays.push(previousDayName);
+  }
+}
 
 async function getCompareData(scope, id){
   let values;
@@ -77,10 +91,8 @@ async function getCompareData(scope, id){
   } else if (scope === 'Subtopic'){
     values = await api.graphCompareHandler({request: 'Subtopic', id});
   }
-  console.log(values);
-  // Need to get current week values and previous week values
-  //currentWeekValues = values.map(element => element.total);  
-  //return annualValues;
+  currentWeekHours = values.thisWeek.map(item => item.time);
+  previousWeekHours = values.lastWeek.map(item => item.time);
 }
 
 async function populateWeeklyCompareGraph(scope, id){
