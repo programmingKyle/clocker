@@ -54,6 +54,7 @@ async function stopTimer(){
     await getAllActiveProjects();
     await populateTopicView();
     await populate30DayGraph('All');
+    await populateAnnualGraph('All');
     toggleInputsDiv();
 }
 
