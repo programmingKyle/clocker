@@ -53,9 +53,9 @@ async function stopTimer(){
     await populateQuickTimes();
     await getAllActiveProjects();
     await populateTopicView();
+    toggleInputsDiv();
     await populate30DayGraph('All');
     await populateAnnualGraph('All');
-    toggleInputsDiv();
 }
 
 function updateTimer(){
