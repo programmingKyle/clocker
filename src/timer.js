@@ -56,6 +56,7 @@ async function stopTimer(){
     toggleInputsDiv();
     await populate30DayGraph('All');
     await populateAnnualGraph('All');
+    await populateWeeklyCompareGraph('All');
 }
 
 function updateTimer(){
