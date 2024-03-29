@@ -73,12 +73,13 @@ subtopicViewBackButton_el.addEventListener('click', async () => {
         await populateTopicView();
         await populate30DayGraph('All');
         await populateAnnualGraph('All');
+        await populateWeeklyCompareGraph('All');
         currentSelectedTopic = null;
     } else if (subjectViewLocation === 1){
         await populateSubtopics(currentSelectedTopic.id, currentSelectedTopic.topic);
         await populateSpecificQuickTimes('topic', currentSelectedTopic.id);
         await populate30DayGraph('Topic', currentSelectedTopic.id);
         await populateAnnualGraph('Topic', currentSelectedTopic.id);
-
+        await populateWeeklyCompareGraph('Topic', currentSelectedTopic.id);
     }
 });
