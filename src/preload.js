@@ -11,6 +11,7 @@ contextBridge.exposeInMainWorld('api', {
     graphMonthHandler: (data) => ipcRenderer.invoke('graph-month-handler', data),
     graphAnnualHandler: (data) => ipcRenderer.invoke('graph-annual-handler', data),
     graphCompareHandler: (data) => ipcRenderer.invoke('graph-compare-handler', data),
+    optionsHandler: (data) => ipcRenderer.invoke('options-handler', data),
 });
 
 contextBridge.exposeInMainWorld('autoUpdater', {

@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const fs = require('fs');
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
 
@@ -669,9 +670,6 @@ async function getSpecificCompareData(formatedDate, scope, id){
   return result;
 }
 
-
-
-
 async function getWeeklyCompareTimes(){
   const today = new Date();
   const thisWeek = [];
@@ -705,3 +703,31 @@ async function getCompareDayTime(formatedDate){
   return result;
 }
 
+ipcMain.handle('options-handler', async (req, data) => {
+  if (!data || !data.request) return;
+  switch(data.request){
+    case 'Save':
+      await saveOptions(data.interval, data.hour, data.minute);
+      break;
+  }
+});
+
+async function saveOptions(interval, hour, minute){
+  const settings = {
+    progressBarSettings: {
+      interval: interval,
+      hour: hour,
+      minute: minute
+    }
+  };
+
+  const jsonSettings = JSON.stringify(settings, null, 2);
+
+  const filePath = `${appDataPath}/options.json`;
+
+  fs.writeFile(filePath, jsonSettings, (err) => {
+    if (err){
+      console.error(err);
+    }
+  })
+}
