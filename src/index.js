@@ -5,6 +5,7 @@ const { autoUpdater } = require('electron-updater');
 
 const sqlite3 = require('sqlite3').verbose();
 const appDataPath = app.getPath('userData');
+const optionsFile = `${appDataPath}/options.json`;
 const db = new sqlite3.Database(`${appDataPath}/database.db`);
 
 db.run(`
@@ -56,7 +57,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const createWindow = () => {
+const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -78,7 +79,12 @@ const createWindow = () => {
       });
       autoUpdater.checkForUpdatesAndNotify();
     }
-  });  
+  });
+
+  console.log(optionsFile);
+  if (!fs.existsSync(optionsFile)){
+    await saveOptions('Daily', 1, 0);
+  }  
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
@@ -723,9 +729,7 @@ async function saveOptions(interval, hour, minute){
 
   const jsonSettings = JSON.stringify(settings, null, 2);
 
-  const filePath = `${appDataPath}/options.json`;
-
-  fs.writeFile(filePath, jsonSettings, (err) => {
+  fs.writeFile(optionsFile, jsonSettings, (err) => {
     if (err){
       console.error(err);
     }
