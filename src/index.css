@@ -155,7 +155,7 @@ p {
 h1,h2,h3,h4,h5,h6 {
   padding: 0px;
   margin: 0px;
-  color: #F1F1F1;
+  color: #ececec;
 }
 
 .slim-button {
@@ -376,4 +376,19 @@ h1,h2,h3,h4,h5,h6 {
 .context-menu-item:hover {
   background-color: #e0e0e0;
   color: #2b2b2b;
+}
+
+.options-group {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-gap: 5px;
+  border-radius: 3px;
+  border-color: #0c708f;
+  border-style: solid;
+  border-width: 1px;
+  margin: 0px 50px;
+  padding: 5px;
+  background: rgb(7,48,60);
+  background: radial-gradient(circle, rgba(7,48,60,1) 0%, rgba(9,60,75,1) 100%);
+  box-shadow: 10px 10px 20px #1B1B1B;
 }
