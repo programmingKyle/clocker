@@ -712,7 +712,7 @@ ipcMain.handle('options-handler', async (req, data) => {
   if (!data || !data.request) return;
   switch(data.request){
     case 'Save':
-      await saveOptions(data.interval, data.hour, data.minute);
+      await saveOptions(data.isEnabled, data.interval, data.hour, data.minute);
       break;
     case 'View':
       const results = await viewOptions();
@@ -733,9 +733,10 @@ async function viewOptions(){
   });
 }
 
-async function saveOptions(interval, hour, minute){
+async function saveOptions(isEnabled, interval, hour, minute){
   const settings = {
     progressBarSettings: {
+      isEnabled: isEnabled,
       interval: interval,
       hour: hour,
       minute: minute

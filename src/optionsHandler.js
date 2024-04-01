@@ -8,12 +8,16 @@ optionsButton_el.addEventListener('click', () => {
 });
 
 async function optionsListeners(){
+    optionsValues = await api.optionsHandler({request: 'View'});
+
     const optionsCloseButton_el = document.getElementById('optionsCloseButton');
     const progressBarSelect_el = document.getElementById('progressBarSelect');
     const progressBarHour_el = document.getElementById('progressBarHour');
     const progressBarMinute_el = document.getElementById('progressBarMinute');
     const saveOptionsButton_el = document.getElementById('saveOptionsButton');
+    const progressbarIsEnabled_el = document.getElementById('progressbarIsEnabled');
 
+    progressbarIsEnabled_el.checked = optionsValues.progressBarSettings.isEnabled;
     progressBarSelect_el.value = optionsValues.progressBarSettings.interval;
     progressBarHour_el.value = optionsValues.progressBarSettings.hour;
     progressBarMinute_el.value = optionsValues.progressBarSettings.minute;
@@ -53,7 +57,8 @@ async function optionsListeners(){
         const interval = progressBarSelect_el.value;
         const hour = progressBarHour_el.value;
         const minute = progressBarMinute_el.value;
-        await api.optionsHandler({request: 'Save', interval, hour, minute});
+        const isEnabled = progressbarIsEnabled_el.checked;
+        await api.optionsHandler({request: 'Save', isEnabled, interval, hour, minute});
         overlayContainer_el.style.display = 'none';
     });
 }
