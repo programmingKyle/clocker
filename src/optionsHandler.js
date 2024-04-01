@@ -24,16 +24,27 @@ async function optionsListeners(){
         overlayContainer_el.style.display = 'none';
     });
 
+    for (const input of required){
+        input.addEventListener('input', () => {
+            if (input.value < 0){
+                input.value = 0;
+            }
+        });    
+    };
+
     saveOptionsButton_el.addEventListener('click', async () => {
         for (const input of required){
             if (input.value === ''){
+                errorHandling(input);
+                return;
+            } else if (input.value < 0){
+                input.value = 0;
                 errorHandling(input);
                 return;
             }
         }
 
         if (progressBarHour_el.value === '0' && progressBarMinute_el.value === '0'){
-            console.log('both are 0');
             errorHandling(progressBarHour_el);
             errorHandling(progressBarMinute_el);
             return;

@@ -81,7 +81,6 @@ const createWindow = async () => {
     }
   });
 
-  console.log(optionsFile);
   if (!fs.existsSync(optionsFile)){
     await saveOptions('Daily', 1, 0);
   }  
