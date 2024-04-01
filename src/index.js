@@ -5,7 +5,7 @@ const { autoUpdater } = require('electron-updater');
 
 const sqlite3 = require('sqlite3').verbose();
 const appDataPath = app.getPath('userData');
-const optionsFile = `${appDataPath}/options.json`;
+const optionsFile = `${appDataPath}\\options.json`;
 const db = new sqlite3.Database(`${appDataPath}/database.db`);
 
 db.run(`
@@ -715,8 +715,24 @@ ipcMain.handle('options-handler', async (req, data) => {
     case 'Save':
       await saveOptions(data.interval, data.hour, data.minute);
       break;
+    case 'View':
+      const results = await viewOptions();
+      return results;
   }
 });
+
+async function viewOptions(){
+  return new Promise((resolve, reject) => {
+    fs.readFile(optionsFile, 'utf-8', (err,data) => {
+      if (err){
+        reject(err);
+      } else {
+        const jsonData = JSON.parse(data);
+        resolve(jsonData);
+      }
+    });
+  });
+}
 
 async function saveOptions(interval, hour, minute){
   const settings = {

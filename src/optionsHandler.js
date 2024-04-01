@@ -23,3 +23,8 @@ async function optionsListeners(){
         await api.optionsHandler({request: 'Save', interval, hour, minute})
     });
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const result = await api.optionsHandler({request: 'View'});
+    console.log(result);
+});
