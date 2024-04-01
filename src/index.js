@@ -751,3 +751,36 @@ async function saveOptions(isEnabled, interval, hour, minute){
     }
   })
 }
+
+ipcMain.handle('progress-bar-handler', async (req, data) => {
+  if (!data) return;
+  const timeFrame = () => {
+    let number;
+    switch (data.interval){
+      case 'Daily':
+        number = 1;
+        break;
+      case 'Weekly':
+        number = 7;
+        break;
+      case 'Monthly':
+        number = 30;
+        break;
+      case 'Annual':
+        number = 365;
+        break;
+    }
+    return number;
+  }
+
+  const timeFrameNumber = timeFrame();
+
+  let times;
+  times = await getSpecificTimes(timeFrameNumber);
+  if (times){
+    const calcTime = await calculateTotalTime(times);
+    return calcTime;  
+  } else {
+    return;
+  }
+});

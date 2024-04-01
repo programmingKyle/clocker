@@ -65,4 +65,5 @@ async function optionsListeners(){
 
 document.addEventListener('DOMContentLoaded', async () => {
     optionsValues = await api.optionsHandler({request: 'View'});
+    await progressBar();
 });
