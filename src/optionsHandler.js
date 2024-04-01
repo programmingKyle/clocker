@@ -1,5 +1,7 @@
 const optionsButton_el = document.getElementById('optionsButton');
 
+let optionsValues;
+
 optionsButton_el.addEventListener('click', () => {
     overlayContainer_el.style.display = 'flex';
     loadOverlayContent('overlays.html', '#optionsContainer', optionsListeners);
@@ -11,6 +13,10 @@ async function optionsListeners(){
     const progressBarHour_el = document.getElementById('progressBarHour');
     const progressBarMinute_el = document.getElementById('progressBarMinute');
     const saveOptionsButton_el = document.getElementById('saveOptionsButton');
+
+    progressBarSelect_el.value = optionsValues.progressBarSettings.interval;
+    progressBarHour_el.value = optionsValues.progressBarSettings.hour;
+    progressBarMinute_el.value = optionsValues.progressBarSettings.minute;
 
     optionsCloseButton_el.addEventListener('click', () => {
         overlayContainer_el.style.display = 'none';
@@ -25,6 +31,5 @@ async function optionsListeners(){
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const result = await api.optionsHandler({request: 'View'});
-    console.log(result);
+    optionsValues = await api.optionsHandler({request: 'View'});
 });
