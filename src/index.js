@@ -8,6 +8,8 @@ const appDataPath = app.getPath('userData');
 const optionsFile = `${appDataPath}\\options.json`;
 const db = new sqlite3.Database(`${appDataPath}/database.db`);
 
+let isClockActive = false;
+
 db.run(`
   CREATE TABLE IF NOT EXISTS topics (
     id INTEGER PRIMARY KEY,
@@ -81,6 +83,14 @@ const createWindow = async () => {
     }
   });
 
+  mainWindow.on('close', (event) => {
+    if (isClockActive){
+      event.preventDefault();
+    } else {
+      app.quit();
+    }
+  });
+
   if (!fs.existsSync(optionsFile)){
     await saveOptions('Daily', 1, 0);
   }  
@@ -112,6 +122,10 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+ipcMain.handle('toggle-clock-active', () => {
+  isClockActive = !isClockActive;
 });
 
 autoUpdater.on('checking-for-update', () => {

@@ -40,6 +40,7 @@ function startTimer(){
     logStartTime = Date.now();
     timerInterval = setInterval(updateTimer, 10);
     toggleInputsDiv();
+    api.toggleClockActive();
 }
 
 async function stopTimer(){
@@ -58,6 +59,7 @@ async function stopTimer(){
     await populateAnnualGraph('All');
     await populateWeeklyCompareGraph('All');
     await progressBar();
+    api.toggleClockActive();
 }
 
 function updateTimer(){

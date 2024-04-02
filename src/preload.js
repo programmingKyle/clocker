@@ -13,6 +13,8 @@ contextBridge.exposeInMainWorld('api', {
     graphCompareHandler: (data) => ipcRenderer.invoke('graph-compare-handler', data),
     optionsHandler: (data) => ipcRenderer.invoke('options-handler', data),
     progressBarHandler: (data) => ipcRenderer.invoke('progress-bar-handler', data),
+
+    toggleClockActive: () => ipcRenderer.invoke('toggle-clock-active'),
 });
 
 contextBridge.exposeInMainWorld('autoUpdater', {
