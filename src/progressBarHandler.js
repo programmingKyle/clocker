@@ -12,7 +12,6 @@ async function progressBar(){
     const goalHours = parseFloat(totalMinutes / 60).toFixed(1);
     
     const goalPercentage = parseFloat(total / goalHours).toFixed(2) * 100;
-    console.log(goalPercentage);
 
     progressBarText_el.textContent = `${goalPercentage}%`;
     progressBar_el.style.width = goalPercentage > 100 ? `100%` : `${goalPercentage}%`;

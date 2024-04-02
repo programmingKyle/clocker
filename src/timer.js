@@ -57,6 +57,7 @@ async function stopTimer(){
     await populate30DayGraph('All');
     await populateAnnualGraph('All');
     await populateWeeklyCompareGraph('All');
+    await progressBar();
 }
 
 function updateTimer(){
