@@ -16,16 +16,23 @@ async function optionsListeners(){
     const progressBarMinute_el = document.getElementById('progressBarMinute');
     const saveOptionsButton_el = document.getElementById('saveOptionsButton');
     const progressbarIsEnabled_el = document.getElementById('progressbarIsEnabled');
-
+    const progressBarInputsDiv_el = document.getElementById('progressBarInputsDiv');
+    
     progressbarIsEnabled_el.checked = optionsValues.progressBarSettings.isEnabled;
     progressBarSelect_el.value = optionsValues.progressBarSettings.interval;
     progressBarHour_el.value = optionsValues.progressBarSettings.hour;
     progressBarMinute_el.value = optionsValues.progressBarSettings.minute;
 
+    toggleProgressBarOptions(progressbarIsEnabled_el, progressBarInputsDiv_el)
+
     const required = [progressBarHour_el, progressBarMinute_el];
 
     optionsCloseButton_el.addEventListener('click', () => {
         overlayContainer_el.style.display = 'none';
+    });
+
+    progressbarIsEnabled_el.addEventListener('click', () => {
+        toggleProgressBarOptions(progressbarIsEnabled_el, progressBarInputsDiv_el)
     });
 
     for (const input of required){
@@ -63,6 +70,14 @@ async function optionsListeners(){
         optionsValues = await api.optionsHandler({request: 'View'});
         await progressBar();
     });
+}
+
+function toggleProgressBarOptions(checkbox, div){
+    if (checkbox.checked){
+        div.style.display = 'grid';
+    } else {
+        div.style.display = 'none';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
