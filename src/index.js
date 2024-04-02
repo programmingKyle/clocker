@@ -327,12 +327,17 @@ async function deleteSubtopic(subtopicID){
 
 ipcMain.handle('log-time-handler', async (req, data) => {
   if (!data) return;
-  const sqlStatement = `INSERT INTO clock (topicID, subtopicID, project, time, date) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+ 
+  const sqlStatement = `
+    INSERT INTO clock (topicID, subtopicID, project, time, date) 
+    VALUES (?, ?, ?, ?, datetime("now", "localtime"))
+  `;
+  
   const params = [data.topicID, data.subtopicID, data.project, data.time];
   const result = databaseHandler('run', sqlStatement, params);
 
   const addProjectResult = await addProject(data.topicID, data.subtopicID, data.project);
-  if (addProjectResult === 'duplicate'){
+  if (addProjectResult === 'duplicate') {
     updateProjectPreviousClock(data.project);
   }
 
