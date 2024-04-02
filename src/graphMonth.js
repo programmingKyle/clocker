@@ -134,7 +134,10 @@ async function populate30DayGraph(scope, id){
   monthHoursGraph = createChart();
 }
 
+let resizeTimer;
+
 window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
   // Destroy the existing chart instances for all canvases
   if (weekCompareGraph) {
     weekCompareGraph.destroy();
@@ -145,9 +148,10 @@ window.addEventListener('resize', () => {
   if (monthHoursGraph) {
     monthHoursGraph.destroy();
   }
-
-  // Recreate the chart instances for all canvases with updated dimensions
-  weekCompareGraph = createWeekCompare();
-  annualHoursGraph = createAnnualHoursGraph();
-  monthHoursGraph = createChart();
+  
+  resizeTimer = setTimeout(() => {
+    weekCompareGraph = createWeekCompare();
+    annualHoursGraph = createAnnualHoursGraph();
+    monthHoursGraph = createChart();
+  }, 500);
 });
