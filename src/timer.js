@@ -48,9 +48,11 @@ async function stopTimer(){
     logStopTime = Date.now();
     timerActive = false;
     const logTime = logStopTime - logStartTime;
-    const formatLogTime = formatTime(logTime);
+    console.log(logTime);
+
+    await splitAndLogTime(logStartTime, logStopTime);
+
     clearInterval(timerInterval);
-    await logTimeHandler(formatLogTime);
     await populateQuickTimes();
     await getAllActiveProjects();
     await populateTopicView();
@@ -60,6 +62,28 @@ async function stopTimer(){
     await populateWeeklyCompareGraph('All');
     await progressBar();
     api.toggleClockActive();
+}
+
+async function splitAndLogTime(startTime, stopTime) {
+    if (stopTime - startTime < 24 * 60 * 60 * 1000) {
+        const logDuration = stopTime - startTime;
+        const formatLogTime = formatTime(logDuration);
+        await logTimeHandler(formatLogTime);
+        return;
+    }
+
+    const startOfDay = new Date(startTime);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const durationUntilEndOfDay = endOfDay.getTime() - startTime;
+
+    const formatLogTime = formatTime(durationUntilEndOfDay);
+    await logTimeHandler(formatLogTime);
+
+    const nextDayStartTime = endOfDay.getTime() + 1;
+    await splitAndLogTime(nextDayStartTime, stopTime);
 }
 
 function updateTimer(){
