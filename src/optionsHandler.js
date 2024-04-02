@@ -60,6 +60,8 @@ async function optionsListeners(){
         const isEnabled = progressbarIsEnabled_el.checked;
         await api.optionsHandler({request: 'Save', isEnabled, interval, hour, minute});
         overlayContainer_el.style.display = 'none';
+        optionsValues = await api.optionsHandler({request: 'View'});
+        await progressBar();
     });
 }
 
