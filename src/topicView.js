@@ -27,6 +27,9 @@ async function populateTopicView(){
         topicItemDiv_el.append(topicName_el, topicTime_el);
 
         topicItemDiv_el.addEventListener('click', async () => {
+            if (timerActive){
+                return;
+            }    
             subjectViewLocation = 1;
             subtopicViewBackButton_el.style.display = 'block';
             currentSelectedTopic = ({id: element.id, topic: element.topic});

@@ -3,6 +3,9 @@ const optionsButton_el = document.getElementById('optionsButton');
 let optionsValues;
 
 optionsButton_el.addEventListener('click', () => {
+    if (timerActive){
+        return;
+    }
     overlayContainer_el.style.display = 'flex';
     loadOverlayContent('overlays.html', '#optionsContainer', optionsListeners);
 });

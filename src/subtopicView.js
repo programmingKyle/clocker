@@ -19,6 +19,9 @@ async function populateSubtopics(topicID, topic) {
     noSubtopicTimeText_el.textContent = time;
 
     noSubtopicItem_el.addEventListener('click', async () => {
+        if (timerActive){
+            return;
+        }
         subjectViewLocation = 2;
         currentSelectedSubtopic = 'null';
         await populate30DayGraph('Subtopic', 'null');
@@ -50,6 +53,9 @@ async function populateSubtopics(topicID, topic) {
     
         // Add event listener using a closure to capture the current value of 'element'
         subtopicItemDiv_el.addEventListener('click', async () => {
+            if (timerActive){
+                return;
+            }
             subjectViewLocation = 2;
             currentSelectedSubtopic = element.id;
             await populate30DayGraph('Subtopic', element.id);
@@ -68,6 +74,9 @@ async function populateSubtopics(topicID, topic) {
 }
 
 subtopicViewBackButton_el.addEventListener('click', async () => {
+    if (timerActive){
+        return;
+    }
     subjectViewLocation -= 1;
     if (subjectViewLocation === 0){
         subtopicViewBackButton_el.style.display = 'none';
