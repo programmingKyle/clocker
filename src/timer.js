@@ -48,7 +48,6 @@ async function stopTimer(){
     logStopTime = Date.now();
     timerActive = false;
     const logTime = logStopTime - logStartTime;
-    console.log(logTime);
 
     await splitAndLogTime(logStartTime, logStopTime);
 

@@ -89,8 +89,30 @@ async function getAnnualGraphData(scope, id){
   } else if (scope === 'Subtopic'){
     values = await api.graphAnnualHandler({request: 'GetSubtopicAnnual', id});
   }
-  annualValues = values.map(element => element.total);  
-  return annualValues;
+
+  const monthLabels = getLast12Months();
+
+  for (const month of monthLabels) {
+    const monthValues = values.filter(entry => {
+      const entryDate = entry.date.split(' ')[0].slice(0, 7); // Extract YYYY-MM from entry.date
+      return entryDate === month;
+    });
+    const monthTotal = await calculateTotalTime(monthValues);
+    annualValues.push(monthTotal);
+  }
+}
+function getLast12Months() {
+  const months = [];
+  const currentDate = new Date();
+
+  for (let i = 0; i < 12; i++) {
+    const month = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+    const year = month.getFullYear();
+    const monthString = (month.getMonth() + 1).toString().padStart(2, '0');
+    months.push(`${year}-${monthString}`);
+  }
+
+  return months.reverse();
 }
 
 async function populateAnnualGraph(scope, id){

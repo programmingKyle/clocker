@@ -615,13 +615,10 @@ async function getAnnualSubjectTime(){
   const startDate = new Date();
   startDate.setFullYear(startDate.getFullYear() - 1);
   const formatedDate = startDate.toISOString().split('T')[0];
-
   const sqlStatement = 
-  `SELECT
-    SUM(time) AS total
+  `SELECT*
   FROM clock
-  WHERE date >= ?
-  GROUP BY strftime('%Y-%m', date)`;
+  WHERE date >= ?`;
   const params = [formatedDate];
   const result = await databaseHandler('all', sqlStatement, params);
   return result;
