@@ -4,8 +4,8 @@ const ctxTopicHours = topicHoursGraph_el.getContext('2d');
 let weekCompareGraph;
 
 let currentWeekDays = [];
-let currentWeekHours;
-let previousWeekHours;
+let currentWeekHours = [];
+let previousWeekHours = [];
 
 function createWeekCompare() {
   return new Chart(ctxTopicHours, {
@@ -14,19 +14,19 @@ function createWeekCompare() {
       labels: currentWeekDays,
       datasets: [{
         label: 'Previous Week',
-        data: previousWeekHours,
+        data: previousWeekHours.reverse(),
         borderColor: 'rgba(169, 169, 169, 0.1)',
         backgroundColor: 'rgba(255, 99, 132, 0)',
         borderWidth: 2,
-        fill: false // No fill under the line
+        fill: false
       },
       {
         label: 'Current Week',
-        data: currentWeekHours,
+        data: currentWeekHours.reverse(),
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0)',
         borderWidth: 2,
-        fill: false // No fill under the line
+        fill: false
       }]
     },
     options: {
@@ -37,31 +37,30 @@ function createWeekCompare() {
           color: '#5E9FDF',
         },
         legend: {
-          display: false // Hide legend
+          display: false
         }
       },
       maintainAspectRatio: false,
       responsive: true,
       scales: {
         y: {
-          display: true, // Display y-axis
+          display: true,
           ticks: {
-            stepSize: 1, // Step size for y-axis ticks
+            stepSize: 1,
             font: {
-              size: 12 // Adjust font size for y-axis ticks
+              size: 12
             },
             color: '#5E9FDF',
           }
         },
         x: {
-          display: false // Hide x-axis
+          display: false
         }
       }
     }
   });
 }
 
-// Initial setup
 document.addEventListener('DOMContentLoaded', async () => {
   await getDaysOfWeek();
   await populateWeeklyCompareGraph('All');
@@ -93,8 +92,38 @@ async function getCompareData(scope, id){
   } else if (scope === 'Subtopic'){
     values = await api.graphCompareHandler({request: 'Subtopic', id});
   }
-  currentWeekHours = values.thisWeek.map(item => item.time);
-  previousWeekHours = values.lastWeek.map(item => item.time);
+  await calculateWeeklyCompare(values);
+}
+
+async function calculateWeeklyCompare(values) {
+  const last14Days = await getPreviousDays(13);
+  dayNumber = 0;
+  for (const day of last14Days) {
+    dayNumber++;
+    const dayValues = values.filter(entry => {
+      const entryDate = entry.date.split(' ')[0];
+      return entryDate === day;
+    });
+
+    const dayTotal = await calculateTotalTime(dayValues);
+
+    if (dayNumber > 7){
+      currentWeekHours.push(dayTotal);
+    } else {
+      previousWeekHours.push(dayTotal);
+    }
+  }
+}
+async function getPreviousDays(dayCount) {
+  const labels = [];
+  const today = new Date();
+  for (let i = dayCount; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    const formattedDate = date.toISOString().slice(0, 10);
+    labels.push(formattedDate);
+  }
+  return labels;
 }
 
 async function populateWeeklyCompareGraph(scope, id){

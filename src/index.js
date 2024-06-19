@@ -616,7 +616,7 @@ async function getAnnualSubjectTime(){
   startDate.setFullYear(startDate.getFullYear() - 1);
   const formatedDate = startDate.toISOString().split('T')[0];
   const sqlStatement = 
-  `SELECT*
+  `SELECT *
   FROM clock
   WHERE date >= ?`;
   const params = [formatedDate];
@@ -630,12 +630,10 @@ async function getSpecificAnnualTimes(scope, id){
   const formatedDate = startDate.toISOString().split('T')[0];
 
   const sqlStatement = 
-  `SELECT
-    SUM(time) AS total
+  `SELECT *
   FROM clock
   WHERE date >= ?
-  AND ${scope}ID = ?
-  GROUP BY strftime('%Y-%m', date)`;
+  AND ${scope}ID = ?`;
   const params = [formatedDate, id];
   const result = await databaseHandler('all', sqlStatement, params);
   return result;
@@ -692,34 +690,11 @@ async function getSpecificCompareData(formatedDate, scope, id){
 }
 
 async function getWeeklyCompareTimes(){
-  const today = new Date();
-  const thisWeek = [];
-  const lastWeek = [];
-
-  for (let i = 0; i < 14; i++){
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    let formatedDate = date.toISOString().split('T')[0];
-    let timeData = await getCompareDayTime(formatedDate);
-    let time = timeData.length > 0 ? timeData[0].total : 0;
-    if (i < 7){
-      thisWeek.push({ date: formatedDate, time: time });
-    } else {
-      lastWeek.push({ date: formatedDate, time: time });
-    }
-  }
-
-  return {thisWeek, lastWeek}
-}
-
-async function getCompareDayTime(formatedDate){
   const sqlStatement = 
-  `SELECT
-    SUM(time) AS total
+  `SELECT *
   FROM clock
-  WHERE DATE(date) = ?
-  GROUP BY DATE(date)`;
-  const params = [formatedDate];
+  WHERE DATE(date) >= DATE('now', '-14 days')`;
+  const params = [];
   const result = await databaseHandler('all', sqlStatement, params);
   return result;
 }

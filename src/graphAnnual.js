@@ -94,7 +94,7 @@ async function getAnnualGraphData(scope, id){
 
   for (const month of monthLabels) {
     const monthValues = values.filter(entry => {
-      const entryDate = entry.date.split(' ')[0].slice(0, 7); // Extract YYYY-MM from entry.date
+      const entryDate = entry.date.split(' ')[0].slice(0, 7);
       return entryDate === month;
     });
     const monthTotal = await calculateTotalTime(monthValues);

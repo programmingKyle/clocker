@@ -26,7 +26,6 @@ async function getMonthTimesGraph(scope, id){
   }
   last30Days = await getLast30Days();
   last30Days.forEach(async (day) => {
-    // Filter values for current day
     const dayValues = values.filter(entry => {
       const entryDate = entry.date.split(' ')[0];
       if (entryDate === day){
