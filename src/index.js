@@ -92,7 +92,7 @@ const createWindow = async () => {
   });
 
   if (!fs.existsSync(optionsFile)){
-    await saveOptions('Daily', 1, 0);
+    await saveOptions(false, 'Daily', 1, 0);
   }  
 
   // and load the index.html of the app.
@@ -217,7 +217,18 @@ function databaseHandler(request, query, params) {
               }
           });  
       });
-  } else {
+  } else if (request === 'get'){
+    return new Promise((resolve, reject) => {
+      db.get(query, params, (err, rows) => {
+        if (err){
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      })
+    })
+  }
+  else {
       console.error('Invalid Database Request');
   }
 }
@@ -349,16 +360,23 @@ ipcMain.handle('log-time-handler', async (req, data) => {
   
   const params = [data.topicID, data.subtopicID, data.project, data.time];
   const result = databaseHandler('run', sqlStatement, params);
-
   const addProjectResult = await addProject(data.topicID, data.subtopicID, data.project);
   if (addProjectResult === 'duplicate') {
-    updateProjectPreviousClock(data.project);
+    const projectID = await getProjectID(data.topicID, data.subtopicID, data.project);
+    updateProjectPreviousClock(projectID);
   }
 
   updateTopicPreviousClock(data.topicID);
   updateSubtopicPreviousClock(data.subtopicID);
   return result;
 });
+
+async function getProjectID(topicID, subtopicID, projectName){
+  const sqlStatement = `SELECT id FROM projects WHERE topicID = ? AND subtopicID = ? AND project = ?`;
+  const params = [topicID, subtopicID, projectName];
+  const result = await databaseHandler('get', sqlStatement, params);
+  return result.id;
+}
 
 // This is used to change the previousClock variable in topic and subtopic tables
 // This will update the order in which topics and subtopics are displayed
@@ -376,9 +394,9 @@ function updateSubtopicPreviousClock(id){
   return result;
 }
 
-function updateProjectPreviousClock(name){
-  const sqlStatement = `UPDATE projects SET previousTime = CURRENT_TIMESTAMP WHERE project = ?`;
-  const params = [name];
+function updateProjectPreviousClock(projectID){
+  const sqlStatement = `UPDATE projects SET previousTime = CURRENT_TIMESTAMP WHERE id = ?`;
+  const params = [projectID];
   const result = databaseHandler('run', sqlStatement, params);
   return result;
 }

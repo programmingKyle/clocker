@@ -2,7 +2,6 @@ async function progressBar(){
     const progressBarContainer_el = document.getElementById('progressBarContainer');
     const progressBar_el = document.getElementById('progressBar');
     const progressBarText_el = document.getElementById('progressBarText');
-
     const interval = optionsValues.progressBarSettings.interval;
     const hour = parseInt(optionsValues.progressBarSettings.hour);
     const minute = parseInt(optionsValues.progressBarSettings.minute);

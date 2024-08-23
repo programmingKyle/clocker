@@ -1,13 +1,13 @@
 {
   "name": "clocker",
-  "productName": "Clocker",
+  "productName": "clocker",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-builder",
-    "make": "electron-builder --win",
+    "make": "electron-builder --linux",
     "publish": "electron-builder --publish always"
   },
   "devDependencies": {
