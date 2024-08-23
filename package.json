@@ -7,7 +7,7 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-builder",
-    "make": "electron-builder --win",
+    "make": "electron-builder --linux",
     "publish": "electron-builder --publish always"
   },
   "devDependencies": {
