@@ -43,7 +43,10 @@ async function getLast30Days() {
   for (let i = 29; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
-    const formattedDate = date.toISOString().slice(0, 10); // Get yyyy-mm-dd format
+    const year = date.getFullYear(); 
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
     labels.push(formattedDate);
   }
   return labels;
